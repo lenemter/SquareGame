@@ -2,7 +2,7 @@ import pygame
 
 
 WINDOW_SIZE = (1080, 720)
-BLOCK_SIZE = (60, 60)
+BLOCK_SIZE_X, BLOCK_SIZE_Y = (60, 60)
 
 
 WHITE = pygame.color.Color("white")
