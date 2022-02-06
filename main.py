@@ -1,3 +1,4 @@
+from asyncio import events
 import pygame
 import logging
 
@@ -135,7 +136,7 @@ class TestLevel:
         self.load_map()
 
     def load_map(self):
-        with open("levels/test_level.txt", mode="r", encoding="UTF-8") as file:
+        with open("levels/1.txt", mode="r", encoding="UTF-8") as file:
             level = file.readlines()
         for y in range(len(level)):
             self.level.append([])
@@ -157,7 +158,7 @@ class TestLevel:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
     pygame.init()
-    screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y))
+    screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y), pygame.RESIZABLE)
     screen.fill(BACKGROUND_COLOR)
     pygame.display.set_caption(WINDOW_NAME)
 
@@ -169,6 +170,11 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.VIDEORESIZE:
+                WINDOW_SIZE_X = event.w
+                WINDOW_SIZE_X_2 = WINDOW_SIZE_X // 2
+                WINDOW_SIZE_Y = event.h
+                WINDOW_SIZE_Y_2 = WINDOW_SIZE_Y // 2
         level.event_handler(event, clock.tick(FPS))
         pygame.display.flip()
 
