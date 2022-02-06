@@ -8,8 +8,8 @@ BLOCK_SIZE_X, BLOCK_SIZE_Y = (54, 54)
 SPEED = 0.005
 FPS = 120
 
-# FONT = pygame.font.SysFont("Impact", 20)
-
+BUTTON_COLOR = pygame.color.Color("#BCBCBC")
+BUTTON_HIGHLIGHT_COLOR = pygame.color.Color("#FF0000")
 
 WHITE = pygame.color.Color("white")
 PLAYER_COLOR = pygame.color.Color("blue")
