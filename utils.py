@@ -1,9 +1,11 @@
 import pygame
 
 
-WINDOW_SIZE = (1080, 720)
+WINDOW_SIZE_X, WINDOW_SIZE_Y = (1080, 720)
+WINDOW_SIZE_X_2, WINDOW_SIZE_Y_2 = (WINDOW_SIZE_X // 2, WINDOW_SIZE_Y // 2)
+WINDOW_NAME = "<Название>"
 BLOCK_SIZE_X, BLOCK_SIZE_Y = (54, 54)
-SPEED = 0.03
+SPEED = 0.005
 FPS = 120
 
 # FONT = pygame.font.SysFont("Impact", 20)
