@@ -1,0 +1,109 @@
+{
+    "levels": [
+        {
+            "filename": "1.txt",
+            "left": true,
+            "top": true,
+            "right": true,
+            "bottom": true
+        },
+        {
+            "filename": "2.txt",
+            "left": true,
+            "top": false,
+            "right": true,
+            "bottom": true
+        },
+        {
+            "filename": "3.txt",
+            "left": false,
+            "top": true,
+            "right": true,
+            "bottom": true
+        },
+        {
+            "filename": "4.txt",
+            "left": true,
+            "top": true,
+            "right": false,
+            "bottom": true
+        },
+        {
+            "filename": "5.txt",
+            "left": true,
+            "top": true,
+            "right": true,
+            "bottom": false
+        },
+        {
+            "filename": "6.txt",
+            "left": false,
+            "top": false,
+            "right": true,
+            "bottom": true
+        },
+        {
+            "filename": "7.txt",
+            "left": true,
+            "top": false,
+            "right": false,
+            "bottom": true
+        },
+        {
+            "filename": "8.txt",
+            "left": true,
+            "top": false,
+            "right": true,
+            "bottom": false
+        },
+        {
+            "filename": "9.txt",
+            "left": false,
+            "top": false,
+            "right": false,
+            "bottom": true
+        },
+        {
+            "filename": "10.txt",
+            "left": false,
+            "top": false,
+            "right": true,
+            "bottom": false
+        },
+        {
+            "filename": "11.txt",
+            "left": true,
+            "top": false,
+            "right": false,
+            "bottom": false
+        },
+        {
+            "filename": "12.txt",
+            "left": false,
+            "top": true,
+            "right": false,
+            "bottom": true
+        },
+        {
+            "filename": "13.txt",
+            "left": false,
+            "top": true,
+            "right": true,
+            "bottom": false
+        },
+        {
+            "filename": "14.txt",
+            "left": false,
+            "top": true,
+            "right": false,
+            "bottom": false
+        },
+        {
+            "filename": "15.txt",
+            "left": true,
+            "top": true,
+            "right": false,
+            "bottom": false
+        }
+    ]
+}
