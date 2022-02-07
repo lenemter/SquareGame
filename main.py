@@ -128,7 +128,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.health += heart.heal_amount
             heart.kill()
-            logging.debug(self.health)
+            # logging.debug(self.health)
 
 
 class Heart(pygame.sprite.Sprite):
@@ -216,7 +216,6 @@ class TestLevel:
 
 
 if __name__ == "__main__":
-
     # Sprite groups
     all_group = pygame.sprite.Group()
     walls_group = pygame.sprite.Group()
