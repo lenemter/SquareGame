@@ -13,6 +13,7 @@ FPS = 120
 
 # Player
 SPEED = 0.005
+BULLET_SPEED = 0.005
 HEALTH_LIMIT = 3
 
 # Colors
