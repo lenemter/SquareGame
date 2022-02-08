@@ -14,7 +14,7 @@ class Button:
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height), 0)
 
         if self.text != '':
-            font = pygame.font.SysFont('comicsans', 60)
+            font = pygame.font.SysFont('comicsans', 32)
             text = font.render(self.text, True, WHITE)
             screen.blit(text, (self.x + (self.width / 2 - text.get_width() / 2),
                                self.y + (self.height / 2 - text.get_height() / 2)))
@@ -30,12 +30,15 @@ if __name__ == "__main__":
     pygame.init()
 
     screen = pygame.display.set_mode((500, 500))
+    screen.fill(BACKGROUND_COLOR)
     clock = pygame.time.Clock()
 
-    button = Button(BUTTON_COLOR, (200, 200), (100, 100), "Test button")
+    button = Button(BUTTON_COLOR, (50, 150), (400, 50), "New game")
+    test_button = Button(BUTTON_COLOR, (50, 250), (400, 50), "Tset")
 
     while True:
         button.draw(screen)
+        test_button.draw(screen)
 
         for event in pygame.event.get():
             mouse_position = pygame.mouse.get_pos()
@@ -45,12 +48,19 @@ if __name__ == "__main__":
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button.hover(mouse_position):
-                    print('Abigus')
+                    print('ABOBA')
+                if test_button.hover(mouse_position):
+                    print('TETS')
 
             if event.type == pygame.MOUSEMOTION:
                 if button.hover(mouse_position):
                     button.color = BUTTON_HIGHLIGHT_COLOR
                 else:
                     button.color = BUTTON_COLOR
+
+                if test_button.hover(mouse_position):
+                    test_button.color = BACKGROUND_COLOR
+                else:
+                    test_button.color = BUTTON_HIGHLIGHT_COLOR
 
         pygame.display.flip()
