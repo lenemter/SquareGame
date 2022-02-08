@@ -90,17 +90,18 @@ class Player(pygame.sprite.Sprite):
         if  pygame.MOUSEBUTTONDOWN in events_types:
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
+            # 0.2 - bullet size
             player_center_x = self.x + (self.w - 0.2) / 2
             player_center_y = self.y + (self.h - 0.2) / 2
 
+            # 0.1 - half of the bullet size
             distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x - 0.1
             distance_y = (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y - 0.1
             angle = math.atan2(distance_y, distance_x)
-            logging.debug(angle)
 
             speed_x = math.cos(angle) * BULLET_SPEED
             speed_y = math.sin(angle) * BULLET_SPEED
-            # 0.2 - bullet size
+            
             Bullet(player_bullet_group, player_center_x, player_center_y, speed_x, speed_y)
 
     def move_single_axis(self, dx, dy):
