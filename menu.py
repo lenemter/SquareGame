@@ -1,6 +1,6 @@
 import pygame
 
-from utils import *
+from common import *
 
 
 class Button:

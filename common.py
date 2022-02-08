@@ -4,18 +4,19 @@ from time import time_ns
 
 # Window
 WINDOW_SIZE_X, WINDOW_SIZE_Y = (1280, 720)
-WINDOW_SIZE_X_2, WINDOW_SIZE_Y_2 = (WINDOW_SIZE_X // 2, WINDOW_SIZE_Y // 2)
+window_size_x_2, window_size_y_2 = (WINDOW_SIZE_X // 2, WINDOW_SIZE_Y // 2)
 WINDOW_NAME = "<Название>"
 
 # Game
 TEST_LEVEL = "levels/test_level.txt"
-BLOCK_SIZE_X, BLOCK_SIZE_Y = (72, 72)
+BLOCK_SIZE_X, BLOCK_SIZE_Y = (72, 36)
 FPS = 120
 
 # Player
 SPEED = 0.005
 BULLET_SPEED = 0.008
 HEALTH_LIMIT = 3
+FLY_LIMIT = 30
 
 # Colors
 WHITE = pygame.color.Color("white")
