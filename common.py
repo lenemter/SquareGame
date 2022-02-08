@@ -26,6 +26,8 @@ BACKGROUND_COLOR = pygame.color.Color("#333333")
 BUTTON_COLOR = pygame.color.Color("#555555")
 BUTTON_HIGHLIGHT_COLOR = pygame.color.Color("#777777")
 
+BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 50
+
 
 def get_time_ms():
     return time_ns() // 1_000_000
