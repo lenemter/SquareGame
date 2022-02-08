@@ -9,7 +9,7 @@ WINDOW_NAME = "<Название>"
 
 # Game
 TEST_LEVEL = "levels/test_level.txt"
-BLOCK_SIZE_X, BLOCK_SIZE_Y = (72, 36)
+BLOCK_SIZE_X, BLOCK_SIZE_Y = (72, 72)
 FPS = 120
 
 # Player

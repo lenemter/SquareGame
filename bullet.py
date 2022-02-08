@@ -13,10 +13,10 @@ class Bullet(pygame.sprite.Sprite):
         self.start_x = x
         self.y = y
         self.start_y = y
-        self.w = w
-        self.h = h
         self.speed_x = speed_x
         self.speed_y = speed_y
+        self.w = w
+        self.h = h
         self.rect = pygame.Rect(
             self.x * BLOCK_SIZE_X,
             self.y * BLOCK_SIZE_Y,
@@ -26,7 +26,7 @@ class Bullet(pygame.sprite.Sprite):
 
     def draw(self, surface, dx, dy):
         self.rect.x = self.x * BLOCK_SIZE_X + dx
-        self.rect.y = self.y * BLOCK_SIZE_X + dy
+        self.rect.y = self.y * BLOCK_SIZE_Y + dy
         pygame.draw.rect(surface, PLAYER_BULLET_COLOR, self.rect, 0, 16)
 
     def event_handler(self, time):
@@ -34,7 +34,9 @@ class Bullet(pygame.sprite.Sprite):
             abs(self.start_x * self.start_x - self.x * self.x)
             + abs(self.start_y * self.start_y - self.y * self.y)
         )  # Distance between start and end
-        if fly_distance > FLY_LIMIT or pygame.sprite.spritecollideany(self, walls_group):
+        if fly_distance > FLY_LIMIT or pygame.sprite.spritecollideany(
+            self, walls_group
+        ):
             self.kill()
         else:
             self.x += self.speed_x * time
