@@ -22,6 +22,8 @@ WHITE = pygame.color.Color("white")
 PLAYER_COLOR = pygame.color.Color("blue")
 PLAYER_BULLET_COLOR = pygame.color.Color("cadetblue4")
 BACKGROUND_COLOR = pygame.color.Color("#333333")
+BUTTON_COLOR = pygame.color.Color("#555555")
+BUTTON_HIGHLIGHT_COLOR = pygame.color.Color("#777777")
 
 
 def get_time_ms():
