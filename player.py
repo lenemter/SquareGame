@@ -45,7 +45,7 @@ class Player(pygame.sprite.Sprite):
         self.health = 3
 
         self.shooting_delay = 210  # in ms
-        self.last_shooting_time = 0
+        self.last_shooting_time = get_time_ms()
 
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
