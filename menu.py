@@ -4,20 +4,27 @@ from utils import *
 
 
 class Button:
-    def __init__(self, coordinates, dimensions, text=''):
+    def __init__(self, coordinates, dimensions, text=""):
         self.color = BUTTON_COLOR
         self.x, self.y = coordinates[0], coordinates[1]
         self.width, self.height = dimensions[0], dimensions[1]
         self.text = text
 
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height), 0)
+        pygame.draw.rect(
+            screen, self.color, (self.x, self.y, self.width, self.height), 0
+        )
 
-        if self.text != '':
+        if self.text != "":
             font = pygame.font.SysFont("Impact", 32)
             text = font.render(self.text, True, WHITE)
-            screen.blit(text, (self.x + (self.width / 2 - text.get_width() / 2),
-                               self.y + (self.height / 2 - text.get_height() / 2)))
+            screen.blit(
+                text,
+                (
+                    self.x + (self.width / 2 - text.get_width() / 2),
+                    self.y + (self.height / 2 - text.get_height() / 2),
+                ),
+            )
 
     def hover(self):
         mouse_position = pygame.mouse.get_pos()
