@@ -38,7 +38,8 @@ class Player(pygame.sprite.Sprite):
 
         self.health = 3
 
-        # self.shooting_delay = 0.
+        self.shooting_delay = 210  # in ms
+        self.last_shooting_time = 0
 
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
@@ -87,7 +88,12 @@ class Player(pygame.sprite.Sprite):
             self.pickup_heart(heart)
 
         # Shooting
-        if  pygame.MOUSEBUTTONDOWN in events_types:
+        if (
+            pygame.mouse.get_pressed()[0]
+            and get_time_ms() >= self.last_shooting_time + self.shooting_delay
+        ):
+            self.last_shooting_time = get_time_ms()
+
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
             # 0.2 - bullet size
@@ -95,14 +101,20 @@ class Player(pygame.sprite.Sprite):
             player_center_y = self.y + (self.h - 0.2) / 2
 
             # 0.1 - half of the bullet size
-            distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x - 0.1
-            distance_y = (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y - 0.1
+            distance_x = (
+                (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x - 0.1
+            )
+            distance_y = (
+                (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y - 0.1
+            )
             angle = math.atan2(distance_y, distance_x)
 
             speed_x = math.cos(angle) * BULLET_SPEED
             speed_y = math.sin(angle) * BULLET_SPEED
-            
-            Bullet(player_bullet_group, player_center_x, player_center_y, speed_x, speed_y)
+
+            Bullet(
+                player_bullet_group, player_center_x, player_center_y, speed_x, speed_y
+            )
 
     def move_single_axis(self, dx, dy):
         last_rect_x = self.rect.x
@@ -273,11 +285,10 @@ class TestLevel:
         self.player.event_handler(events, events_types, time)
         for bullet in player_bullet_group:
             bullet.event_handler(time)
-    
+
     def draw(self, surface):
         self.camera.update(self.player)
         self.camera.draw(surface)
-
 
 
 if __name__ == "__main__":
@@ -300,7 +311,7 @@ if __name__ == "__main__":
 
     while running:
         events = pygame.event.get()
-        events_types = [event.type for event in events]
+        events_types = {event.type for event in events}
 
         if pygame.QUIT in events_types:
             running = False
@@ -312,9 +323,9 @@ if __name__ == "__main__":
                 WINDOW_SIZE_X_2 = WINDOW_SIZE_X // 2
                 WINDOW_SIZE_Y = event.h
                 WINDOW_SIZE_Y_2 = WINDOW_SIZE_Y // 2
-        
+
         level.event_handler(events, events_types, clock.tick(FPS))
-        
+
         level.draw(screen)
         pygame.display.flip()
 
