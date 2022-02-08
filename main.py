@@ -161,7 +161,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.health += heart.heal_amount
             heart.kill()
-            # logging.debug(self.health)
 
 
 class Heart(pygame.sprite.Sprite):
@@ -190,7 +189,7 @@ class Heart(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, group, x, y, speed_x, speed_y, w=0.2, h=0.2, fly_limit=30):
         super().__init__(all_group, group)
-        print(x, y)
+
         self.x = x
         self.start_x = x
         self.y = y
@@ -213,13 +212,12 @@ class Bullet(pygame.sprite.Sprite):
         pygame.draw.rect(surface, PLAYER_BULLET_COLOR, self.rect, 0, 16)
 
     def event_handler(self, time):
-        if (
-            math.sqrt(
-                abs(self.start_x * self.start_x - self.x * self.x)
-                + abs(self.start_y * self.start_y - self.y * self.y)
-            )  # Distance between start and end
-            > self.fly_limit
-        ):
+        fly_distance = math.sqrt(
+            abs(self.start_x * self.start_x - self.x * self.x)
+            + abs(self.start_y * self.start_y - self.y * self.y)
+        )  # Distance between start and end
+        in_wall = pygame.sprite.spritecollideany(self, walls_group)
+        if fly_distance > self.fly_limit or in_wall:
             self.kill()
         else:
             self.x += self.speed_x * time
@@ -282,9 +280,9 @@ class TestLevel:
                     Heart(x, y)
 
     def event_handler(self, events, events_types, time):
-        self.player.event_handler(events, events_types, time)
         for bullet in player_bullet_group:
             bullet.event_handler(time)
+        self.player.event_handler(events, events_types, time)
 
     def draw(self, surface):
         self.camera.update(self.player)
