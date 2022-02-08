@@ -6,13 +6,14 @@ environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 import pygame
 import logging
 
-import common
 from common import (
-    TEST_LEVEL,
     WINDOW_SIZE_X,
     WINDOW_SIZE_Y,
     WINDOW_NAME,
     FPS,
+    BACKGROUND_COLOR,
+    BUTTON_SIZE_X,
+    BUTTON_SIZE_Y,
 )
 
 logging.basicConfig(level=logging.DEBUG)
@@ -20,65 +21,69 @@ pygame.init()
 screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y), pygame.RESIZABLE)
 pygame.display.set_caption(WINDOW_NAME)
 
-from globals import player_bullet_group
-
-from camera import Camera
-from player import Player
-from wall import Wall
-from heart import Heart
-
-
-class TestLevel:
-    def __init__(self):
-        self.player = None
-        self.camera = Camera()
-        self.load_map()
-
-    def load_map(self):
-        with open(TEST_LEVEL, mode="r", encoding="UTF-8") as file:
-            level = file.readlines()
-
-        for y, row in enumerate(level):
-            for x, cell in enumerate(row):
-                if cell == "#":
-                    Wall(x, y)
-                elif cell == "@":
-                    self.player = Player(x, y)
-                elif cell == "H":
-                    Heart(x, y)
-
-    def event_handler(self, events, events_types, time):
-        for bullet in player_bullet_group:
-            bullet.event_handler(time)
-        self.player.event_handler(events, events_types, time)
-
-    def draw(self, surface):
-        self.camera.update(self.player)
-        self.camera.draw(surface)
+from test_level import launch_level
+from button import Button
 
 
 def main():
-    level = TestLevel()
+    pygame.init()
+    pygame.display.set_caption(WINDOW_NAME)
     clock = pygame.time.Clock()
+
+    screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y))
+    screen.fill(BACKGROUND_COLOR)
+
+    x_pos = (screen.get_width() - BUTTON_SIZE_X) // 2
+
+    buttons_group = pygame.sprite.Group()
+
+    play_button = Button(
+        group=buttons_group,
+        x=x_pos,
+        y=100,
+        w=BUTTON_SIZE_X,
+        h=BUTTON_SIZE_Y,
+        text="Играть",
+        callback=launch_level,
+        args=(screen,),
+    )
+    collections_button = Button(
+        group=buttons_group,
+        x=x_pos,
+        y=175,
+        w=BUTTON_SIZE_X,
+        h=BUTTON_SIZE_Y,
+        text="Коллекции",
+    )
+    stats_button = Button(
+        group=buttons_group,
+        x=x_pos,
+        y=250,
+        w=BUTTON_SIZE_X,
+        h=BUTTON_SIZE_Y,
+        text="Статистика",
+    )
+
     running = True
 
     while running:
+        play_button.draw(screen)
+        collections_button.draw(screen)
+        stats_button.draw(screen)
+        pygame.display.flip()
+        clock.tick(FPS)
+
         events = pygame.event.get()
         events_types = {event.type for event in events}
 
         if pygame.QUIT in events_types:
             running = False
-            break
 
-        for event in events:
-            if event.type == pygame.VIDEORESIZE:
-                common.window_size_x_2 = event.w // 2
-                common.window_size_y_2 = event.h // 2
-
-        level.event_handler(events, events_types, clock.tick(FPS))
-
-        level.draw(screen)
-        pygame.display.flip()
+        for button in buttons_group:
+            result = button.event_handler(events, events_types)
+            if result:
+                running = False
+                break
 
     pygame.quit()
 
