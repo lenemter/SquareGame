@@ -25,8 +25,8 @@ class Player(pygame.sprite.Sprite):
         # Basic stuff
         self.x = x
         self.y = y
-        self.w = 0.5
-        self.h = 0.5
+        self.w = 0.6
+        self.h = 0.6
         self.rect = pygame.Rect(
             entropy, entropy, self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y
         )
@@ -37,6 +37,8 @@ class Player(pygame.sprite.Sprite):
         self.last_camera_dy = 0
 
         self.health = 3
+
+        # self.shooting_delay = 0.
 
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
@@ -88,14 +90,18 @@ class Player(pygame.sprite.Sprite):
         if  pygame.MOUSEBUTTONDOWN in events_types:
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
-            distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - self.x
-            distance_y = (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - self.y
-            logging.debug(f"{distance_x=} {distance_y=}")
+            player_center_x = self.x + (self.w - 0.2) / 2
+            player_center_y = self.y + (self.h - 0.2) / 2
+
+            distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x - 0.1
+            distance_y = (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y - 0.1
             angle = math.atan2(distance_y, distance_x)
+            logging.debug(angle)
 
             speed_x = math.cos(angle) * BULLET_SPEED
             speed_y = math.sin(angle) * BULLET_SPEED
-            Bullet(player_bullet_group, self.x, self.y, speed_x, speed_y)
+            # 0.2 - bullet size
+            Bullet(player_bullet_group, player_center_x, player_center_y, speed_x, speed_y)
 
     def move_single_axis(self, dx, dy):
         last_rect_x = self.rect.x
@@ -171,8 +177,7 @@ class Heart(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, group, x, y, speed_x, speed_y, w=0.2, h=0.2, fly_limit=30):
         super().__init__(all_group, group)
-        global entropy
-
+        print(x, y)
         self.x = x
         self.start_x = x
         self.y = y
@@ -192,7 +197,7 @@ class Bullet(pygame.sprite.Sprite):
     def draw(self, surface, dx, dy):
         self.rect.x = self.x * BLOCK_SIZE_X + dx
         self.rect.y = self.y * BLOCK_SIZE_X + dy
-        pygame.draw.rect(surface, PLAYER_COLOR, self.rect, 0)
+        pygame.draw.rect(surface, PLAYER_BULLET_COLOR, self.rect, 0, 16)
 
     def event_handler(self, time):
         if (
