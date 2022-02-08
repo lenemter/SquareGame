@@ -1,4 +1,5 @@
 # Removes "Hello from the pygame community. https://www.pygame.org/contribute.html"
+import math
 from os import environ
 
 environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
@@ -24,8 +25,8 @@ class Player(pygame.sprite.Sprite):
         # Basic stuff
         self.x = x
         self.y = y
-        self.w = 0.5
-        self.h = 0.5
+        self.w = 0.6
+        self.h = 0.6
         self.rect = pygame.Rect(
             entropy, entropy, self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y
         )
@@ -35,7 +36,10 @@ class Player(pygame.sprite.Sprite):
         self.last_camera_dx = 0
         self.last_camera_dy = 0
 
-        self.health = 0
+        self.health = 3
+
+        self.shooting_delay = 210  # in ms
+        self.last_shooting_time = 0
 
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
@@ -54,7 +58,7 @@ class Player(pygame.sprite.Sprite):
             )
             surface.blit(self.image, ((i * 1.2 - 1) * BLOCK_SIZE_X, 0.2 * BLOCK_SIZE_Y))
 
-    def event_handler(self, event, time):
+    def event_handler(self, _, events_types, time):
         keys = pygame.key.get_pressed()
         dx = (
             (
@@ -82,6 +86,35 @@ class Player(pygame.sprite.Sprite):
         heart_hits = pygame.sprite.spritecollide(self, hearts_group, False)
         for heart in heart_hits:
             self.pickup_heart(heart)
+
+        # Shooting
+        if (
+            pygame.mouse.get_pressed()[0]
+            and get_time_ms() >= self.last_shooting_time + self.shooting_delay
+        ):
+            self.last_shooting_time = get_time_ms()
+
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+
+            # 0.2 - bullet size
+            player_center_x = self.x + (self.w - 0.2) / 2
+            player_center_y = self.y + (self.h - 0.2) / 2
+
+            # 0.1 - half of the bullet size
+            distance_x = (
+                (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x - 0.1
+            )
+            distance_y = (
+                (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y - 0.1
+            )
+            angle = math.atan2(distance_y, distance_x)
+
+            speed_x = math.cos(angle) * BULLET_SPEED
+            speed_y = math.sin(angle) * BULLET_SPEED
+
+            Bullet(
+                player_bullet_group, player_center_x, player_center_y, speed_x, speed_y
+            )
 
     def move_single_axis(self, dx, dy):
         last_rect_x = self.rect.x
@@ -128,7 +161,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.health += heart.heal_amount
             heart.kill()
-            # logging.debug(self.health)
 
 
 class Heart(pygame.sprite.Sprite):
@@ -152,6 +184,44 @@ class Heart(pygame.sprite.Sprite):
         )
         self.rect.x = self.x * BLOCK_SIZE_X + dx
         self.rect.y = self.y * BLOCK_SIZE_Y + dy
+
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, group, x, y, speed_x, speed_y, w=0.2, h=0.2, fly_limit=30):
+        super().__init__(all_group, group)
+
+        self.x = x
+        self.start_x = x
+        self.y = y
+        self.start_y = y
+        self.w = w
+        self.h = h
+        self.fly_limit = fly_limit
+        self.speed_x = speed_x
+        self.speed_y = speed_y
+        self.rect = pygame.Rect(
+            self.x * BLOCK_SIZE_X,
+            self.y * BLOCK_SIZE_Y,
+            self.w * BLOCK_SIZE_X,
+            self.h * BLOCK_SIZE_Y,
+        )
+
+    def draw(self, surface, dx, dy):
+        self.rect.x = self.x * BLOCK_SIZE_X + dx
+        self.rect.y = self.y * BLOCK_SIZE_X + dy
+        pygame.draw.rect(surface, PLAYER_BULLET_COLOR, self.rect, 0, 16)
+
+    def event_handler(self, time):
+        fly_distance = math.sqrt(
+            abs(self.start_x * self.start_x - self.x * self.x)
+            + abs(self.start_y * self.start_y - self.y * self.y)
+        )  # Distance between start and end
+        in_wall = pygame.sprite.spritecollideany(self, walls_group)
+        if fly_distance > self.fly_limit or in_wall:
+            self.kill()
+        else:
+            self.x += self.speed_x * time
+            self.y += self.speed_y * time
 
 
 class Wall(pygame.sprite.Sprite):
@@ -209,10 +279,14 @@ class TestLevel:
                 elif cell == "H":
                     Heart(x, y)
 
-    def event_handler(self, event, time):
-        self.player.event_handler(event, time)
+    def event_handler(self, events, events_types, time):
+        for bullet in player_bullet_group:
+            bullet.event_handler(time)
+        self.player.event_handler(events, events_types, time)
+
+    def draw(self, surface):
         self.camera.update(self.player)
-        self.camera.draw(screen)
+        self.camera.draw(surface)
 
 
 if __name__ == "__main__":
@@ -234,16 +308,23 @@ if __name__ == "__main__":
     running = True
 
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.VIDEORESIZE:
+        events = pygame.event.get()
+        events_types = {event.type for event in events}
+
+        if pygame.QUIT in events_types:
+            running = False
+            break
+
+        for event in events:
+            if event.type == pygame.VIDEORESIZE:
                 WINDOW_SIZE_X = event.w
                 WINDOW_SIZE_X_2 = WINDOW_SIZE_X // 2
                 WINDOW_SIZE_Y = event.h
                 WINDOW_SIZE_Y_2 = WINDOW_SIZE_Y // 2
 
-        level.event_handler(event, clock.tick(FPS))
+        level.event_handler(events, events_types, clock.tick(FPS))
+
+        level.draw(screen)
         pygame.display.flip()
 
     pygame.quit()
