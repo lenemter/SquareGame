@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from utils import (
+from common import (
     BLOCK_SIZE_X,
     BLOCK_SIZE_Y,
     SPEED,
@@ -64,7 +64,7 @@ class Player(pygame.sprite.Sprite):
             )
             surface.blit(self.image, ((i * 1.2 - 1) * BLOCK_SIZE_X, 0.2 * BLOCK_SIZE_Y))
 
-    def event_handler(self, _, events_types, time):
+    def event_handler(self, events, events_types, time):
         keys = pygame.key.get_pressed()
         dx = (
             (
@@ -139,8 +139,6 @@ class Player(pygame.sprite.Sprite):
             self.y -= dy
             self.rect.y = last_rect_y
             return None
-
-        # logging.debug(self.x, self.y)
 
         walls_hits = pygame.sprite.spritecollide(self, walls_group, False)
         for wall in walls_hits:

@@ -1,13 +1,12 @@
 import pygame
 import math
 
-from globals import *
-from utils import *
-from images import *
+from globals import all_group, walls_group
+from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, PLAYER_BULLET_COLOR, FLY_LIMIT
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, group, x, y, speed_x, speed_y, w=0.2, h=0.2, fly_limit=30):
+    def __init__(self, group, x, y, speed_x, speed_y, w=0.2, h=0.2):
         super().__init__(all_group, group)
 
         self.x = x
@@ -16,7 +15,6 @@ class Bullet(pygame.sprite.Sprite):
         self.start_y = y
         self.w = w
         self.h = h
-        self.fly_limit = fly_limit
         self.speed_x = speed_x
         self.speed_y = speed_y
         self.rect = pygame.Rect(
@@ -36,8 +34,7 @@ class Bullet(pygame.sprite.Sprite):
             abs(self.start_x * self.start_x - self.x * self.x)
             + abs(self.start_y * self.start_y - self.y * self.y)
         )  # Distance between start and end
-        in_wall = pygame.sprite.spritecollideany(self, walls_group)
-        if fly_distance > self.fly_limit or in_wall:
+        if fly_distance > FLY_LIMIT or pygame.sprite.spritecollideany(self, walls_group):
             self.kill()
         else:
             self.x += self.speed_x * time

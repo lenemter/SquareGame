@@ -1,6 +1,6 @@
 import pygame
 
-from utils import BLOCK_SIZE_X, BLOCK_SIZE_Y, WHITE
+from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, WHITE
 from globals import all_group, walls_group, entropy, entropy_step
 
 
@@ -20,5 +20,5 @@ class Wall(pygame.sprite.Sprite):
 
     def draw(self, surface, dx, dy):
         self.rect.x = self.x * BLOCK_SIZE_X + dx
-        self.rect.y = self.y * BLOCK_SIZE_X + dy
+        self.rect.y = self.y * BLOCK_SIZE_Y + dy
         pygame.draw.rect(surface, WHITE, self.rect, 1)

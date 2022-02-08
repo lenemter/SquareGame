@@ -6,12 +6,11 @@ environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 import pygame
 import logging
 
-from utils import (
+import common
+from common import (
     TEST_LEVEL,
     WINDOW_SIZE_X,
     WINDOW_SIZE_Y,
-    WINDOW_SIZE_X_2,
-    WINDOW_SIZE_Y_2,
     WINDOW_NAME,
     FPS,
 )
@@ -21,8 +20,7 @@ pygame.init()
 screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y), pygame.RESIZABLE)
 pygame.display.set_caption(WINDOW_NAME)
 
-from images import *
-from globals import *
+from globals import player_bullet_group
 
 from camera import Camera
 from player import Player
@@ -74,10 +72,8 @@ def main():
 
         for event in events:
             if event.type == pygame.VIDEORESIZE:
-                WINDOW_SIZE_X = event.w
-                WINDOW_SIZE_X_2 = WINDOW_SIZE_X // 2
-                WINDOW_SIZE_Y = event.h
-                WINDOW_SIZE_Y_2 = WINDOW_SIZE_Y // 2
+                common.window_size_x_2 = event.w // 2
+                common.window_size_y_2 = event.h // 2
 
         level.event_handler(events, events_types, clock.tick(FPS))
 
