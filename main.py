@@ -1,14 +1,9 @@
-# Removes "Hello from the pygame community. https://www.pygame.org/contribute.html"
-from os import environ
-
-environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
-
 import pygame
 import logging
 
 from common import (
-    WINDOW_SIZE_X,
-    WINDOW_SIZE_Y,
+    window_size_x_2,
+    window_size_y_2,
     WINDOW_NAME,
     FPS,
     BACKGROUND_COLOR,
@@ -16,13 +11,18 @@ from common import (
     BUTTON_SIZE_Y,
 )
 
-logging.basicConfig(level=logging.DEBUG)
-pygame.init()
-screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y), pygame.RESIZABLE)
-pygame.display.set_caption(WINDOW_NAME)
-
 from test_level import launch_level
 from button import Button
+
+# Removes "Hello from the pygame community. https://www.pygame.org/contribute.html"
+from os import environ
+
+environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
+
+logging.basicConfig(level=logging.DEBUG)
+pygame.init()
+screen = pygame.display.set_mode((window_size_x_2, window_size_y_2), pygame.RESIZABLE)
+pygame.display.set_caption(WINDOW_NAME)
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
     pygame.display.set_caption(WINDOW_NAME)
     clock = pygame.time.Clock()
 
-    screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y))
+    screen = pygame.display.set_mode((window_size_x_2, window_size_y_2))
     screen.fill(BACKGROUND_COLOR)
 
     x_pos = (screen.get_width() - BUTTON_SIZE_X) // 2
@@ -47,6 +47,7 @@ def main():
         callback=launch_level,
         args=(screen,),
     )
+
     collections_button = Button(
         group=buttons_group,
         x=x_pos,
@@ -55,6 +56,7 @@ def main():
         h=BUTTON_SIZE_Y,
         text="Коллекции",
     )
+
     stats_button = Button(
         group=buttons_group,
         x=x_pos,
