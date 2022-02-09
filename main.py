@@ -16,27 +16,21 @@ from common import (
     BUTTON_SIZE_Y,
 )
 
-logging.basicConfig(level=logging.DEBUG)
 pygame.init()
 screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y), pygame.RESIZABLE)
-pygame.display.set_caption(WINDOW_NAME)
 
 from test_level import launch_level
 from button import Button
 
 
 def main():
-    pygame.init()
-    pygame.display.set_caption(WINDOW_NAME)
-    clock = pygame.time.Clock()
+    logging.basicConfig(level=logging.DEBUG)
 
-    screen = pygame.display.set_mode((WINDOW_SIZE_X, WINDOW_SIZE_Y))
+    pygame.display.set_caption(WINDOW_NAME)
     screen.fill(BACKGROUND_COLOR)
 
     x_pos = (screen.get_width() - BUTTON_SIZE_X) // 2
-
     buttons_group = pygame.sprite.Group()
-
     play_button = Button(
         group=buttons_group,
         x=x_pos,
@@ -66,6 +60,7 @@ def main():
         text="Статистика",
     )
 
+    clock = pygame.time.Clock()
     running = True
 
     while running:
