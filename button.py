@@ -5,13 +5,14 @@ from common import (
     BUTTON_HOVER_COLOR,
     WHITE,
 )
+from globals import gui_group_custom
 
 
 class Button(pygame.sprite.Sprite):
     def __init__(
         self, group, x, y, w, h, text="", callback=None, args=tuple(), kwargs=dict()
     ):
-        super().__init__(group)
+        super().__init__(gui_group_custom, group)
 
         self.x = x
         self.y = y

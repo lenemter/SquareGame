@@ -1,13 +1,13 @@
 import pygame
 import math
 
-from globals import all_group, walls_group
+from globals import game_group_2, walls_group
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, PLAYER_BULLET_COLOR, FLY_LIMIT
 
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, group, x, y, speed_x, speed_y, w=0.2, h=0.2):
-        super().__init__(all_group, group)
+        super().__init__(game_group_2, group)
 
         self.x = x
         self.start_x = x

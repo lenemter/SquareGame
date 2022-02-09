@@ -11,7 +11,7 @@ from common import (
     get_time_ms,
 )
 from globals import (
-    all_group,
+    game_group_1,
     hearts_group,
     player_bullet_group,
     walls_group,
@@ -25,7 +25,7 @@ from bullet import Bullet
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        super().__init__(all_group)
+        super().__init__(game_group_1)
         global entropy
 
         # Basic stuff

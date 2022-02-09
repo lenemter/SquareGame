@@ -2,12 +2,12 @@ import pygame
 
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y
 from images import HEART_IMAGE
-from globals import all_group, hearts_group
+from globals import game_group_1, hearts_group
 
 
 class Heart(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        super().__init__(all_group, hearts_group)
+        super().__init__(game_group_1, hearts_group)
         self.x = x
         self.y = y
         self.w = 1

@@ -4,7 +4,14 @@ from common import (
     BLOCK_SIZE_Y,
     BACKGROUND_COLOR,
 )
-from globals import all_group
+from globals import (
+    game_group_1,
+    game_group_2,
+    game_group_3,
+    gui_group_1,
+    gui_group_2,
+    gui_group_3,
+)
 
 
 class Camera:
@@ -14,7 +21,19 @@ class Camera:
 
     def draw(self, surface):
         surface.fill(BACKGROUND_COLOR)
-        for obj in all_group:
+
+        for obj in game_group_1:
+            obj.draw(surface, self.x, self.y)
+        for obj in game_group_2:
+            obj.draw(surface, self.x, self.y)
+        for obj in game_group_3:
+            obj.draw(surface, self.x, self.y)
+
+        for obj in gui_group_1:
+            obj.draw(surface, self.x, self.y)
+        for obj in gui_group_2:
+            obj.draw(surface, self.x, self.y)
+        for obj in gui_group_3:
             obj.draw(surface, self.x, self.y)
 
     def update(self, target):

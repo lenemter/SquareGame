@@ -1,12 +1,12 @@
 import pygame
 
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, WHITE
-from globals import all_group, walls_group, entropy, entropy_step
+from globals import game_group_1, walls_group, entropy, entropy_step
 
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        super().__init__(all_group, walls_group)
+        super().__init__(game_group_1, walls_group)
         global entropy
 
         self.x = x
