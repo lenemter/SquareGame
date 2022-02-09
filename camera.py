@@ -30,11 +30,11 @@ class Camera:
             obj.draw(surface, self.x, self.y)
 
         for obj in gui_group_1:
-            obj.draw(surface, self.x, self.y)
+            obj.draw(surface)
         for obj in gui_group_2:
-            obj.draw(surface, self.x, self.y)
+            obj.draw(surface)
         for obj in gui_group_3:
-            obj.draw(surface, self.x, self.y)
+            obj.draw(surface)
 
     def update(self, target):
         self.x = target.rect.w // 2 - target.x * BLOCK_SIZE_X + common.window_size_x_2
