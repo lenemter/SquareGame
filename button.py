@@ -2,7 +2,7 @@ import pygame
 
 from common import (
     BUTTON_COLOR,
-    BUTTON_HIGHLIGHT_COLOR,
+    BUTTON_HOVER_COLOR,
     WHITE,
 )
 
@@ -47,7 +47,7 @@ class Button(pygame.sprite.Sprite):
 
     def event_handler(self, events, events_types):
         if self.is_hovered():
-            self.color = BUTTON_HIGHLIGHT_COLOR
+            self.color = BUTTON_HOVER_COLOR
         else:
             self.color = BUTTON_COLOR
             return None
