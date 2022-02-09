@@ -8,11 +8,13 @@ from camera import Camera
 from player import Player
 from wall import Wall
 from heart import Heart
+from hud import HUD1
 
 
 class TestLevel:
     def __init__(self):
         self.player = None
+        self.hud_1 = None
         self.camera = Camera()
         self.load_map()
 
@@ -26,6 +28,7 @@ class TestLevel:
                     Wall(x, y)
                 elif cell == "@":
                     self.player = Player(x, y)
+                    self.hud_1 = HUD1(self.player)
                 elif cell == "H":
                     Heart(x, y)
 
