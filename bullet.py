@@ -2,11 +2,11 @@ import pygame
 import math
 
 from globals import game_group_2, walls_group
-from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, PLAYER_BULLET_COLOR, FLY_LIMIT
+from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, FLY_LIMIT
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, group, x, y, speed_x, speed_y, w=0.2, h=0.2):
+    def __init__(self, group, x, y, speed_x, speed_y, w, h, damage, color):
         super().__init__(game_group_2, group)
 
         self.x = x
@@ -24,10 +24,13 @@ class Bullet(pygame.sprite.Sprite):
             self.h * BLOCK_SIZE_Y,
         )
 
+        self.damage = damage
+        self.color = color
+
     def draw(self, surface, dx, dy):
         self.rect.x = self.x * BLOCK_SIZE_X + dx
         self.rect.y = self.y * BLOCK_SIZE_Y + dy
-        pygame.draw.rect(surface, PLAYER_BULLET_COLOR, self.rect, 0, 16)
+        pygame.draw.rect(surface, self.color, self.rect, 0, 16)
 
     def event_handler(self, time):
         fly_distance = math.sqrt(

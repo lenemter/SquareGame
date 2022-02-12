@@ -14,14 +14,13 @@ FPS = 120
 
 # Player
 SPEED = 0.005
-BULLET_SPEED = 0.008
+BULLET_SPEED = 0.007
 HEALTH_LIMIT = 3
 FLY_LIMIT = 30
 
 # Colors
 WHITE = pygame.color.Color("white")
 PLAYER_COLOR = pygame.color.Color("blue")
-PLAYER_BULLET_COLOR = pygame.color.Color("cadetblue4")
 BACKGROUND_COLOR = pygame.color.Color("#333333")
 
 BUTTON_COLOR = pygame.color.Color("#555555")
