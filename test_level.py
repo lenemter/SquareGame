@@ -1,7 +1,8 @@
 import pygame
+import random
 
 import common
-from common import TEST_LEVEL, FPS
+from common import FPS
 from globals import player_bullet_group
 
 from camera import Camera
@@ -20,7 +21,8 @@ class TestLevel:
         self.load_map()
 
     def load_map(self):
-        with open(TEST_LEVEL, mode="r", encoding="UTF-8") as file:
+        test_level = f"levels/{random.randint(1, 3)}.txt"
+        with open(test_level, mode="r", encoding="UTF-8") as file:
             level = file.readlines()
 
         for y, row in enumerate(level):
