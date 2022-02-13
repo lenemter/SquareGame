@@ -1,23 +1,28 @@
 import pygame
+import random
 
 import common
-from common import TEST_LEVEL, FPS
+from common import FPS
 from globals import player_bullet_group
 
 from camera import Camera
 from player import Player
 from wall import Wall
 from heart import Heart
+from hud import HUD1
+from weapon import Weapon, weapons
 
 
 class TestLevel:
     def __init__(self):
         self.player = None
+        self.hud_1 = None
         self.camera = Camera()
         self.load_map()
 
     def load_map(self):
-        with open(TEST_LEVEL, mode="r", encoding="UTF-8") as file:
+        test_level = f"levels/{random.randint(1, 3)}.txt"
+        with open(test_level, mode="r", encoding="UTF-8") as file:
             level = file.readlines()
 
         for y, row in enumerate(level):
@@ -26,8 +31,15 @@ class TestLevel:
                     Wall(x, y)
                 elif cell == "@":
                     self.player = Player(x, y)
+                    self.hud_1 = HUD1(self.player)
                 elif cell == "H":
                     Heart(x, y)
+                elif cell == "P":
+                    Weapon(x, y, weapons[0])
+                elif cell == "A":
+                    Weapon(x, y, weapons[1])
+                elif cell == "B":
+                    Weapon(x, y, weapons[2])
 
     def event_handler(self, events, events_types, time):
         for bullet in player_bullet_group:
