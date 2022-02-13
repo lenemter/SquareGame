@@ -1,7 +1,7 @@
 import json
 import pygame
 
-from common import window_size_x
+from common import window_size_x, STATS_COLOR
 
 """
 games = Количество сыгранных игр
@@ -32,21 +32,29 @@ def render_stats(surface):
     with open("stats.json", "r") as stats_file_reader:
         stats = json.load(stats_file_reader)
 
-    font = pygame.font.SysFont("ComicSans", 28)
+    font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 20)
     text = font.render("Статистика", True, "#DDDDDD")
     surface.blit(text, ((window_size_x - text.get_width()) // 2, 360))
 
-    stats_keys = ["Количество сыгранных игр: ", "Количество смертей: ", "Количество убитых врагов: ",
-                  "Количество взятых прокачек: ", "Количество взятого оружия: ",
-                  "Количество взятых сердечек: ", "Количество пройденных комнат: ",
-                  "Количество пройденных комнат: "]
+    stats_keys = [
+        "Количество сыгранных игр: ",
+        "Количество смертей: ",
+        "Количество убитых врагов: ",
+        "Количество взятых прокачек: ",
+        "Количество взятого оружия: ",
+        "Количество взятых сердечек: ",
+        "Количество пройденных комнат: ",
+        "Количество пройденных комнат: ",
+    ]
 
     stats = [str(value) for value in stats.values()]
 
     height = 400
 
     for i in range(len(stats_keys)):
-        stats_font = pygame.font.SysFont("ComicSans", 22)
-        stat = stats_font.render(stats_keys[i] + stats[i], True, "#BBBBBB")
+        stats_font = pygame.font.Font(
+            "fonts/Press_Start_2P/PressStart2P-Regular.ttf", 16
+        )
+        stat = stats_font.render(stats_keys[i] + stats[i], True, STATS_COLOR)
         surface.blit(stat, ((surface.get_width() - stat.get_width()) // 2, height))
         height += 30
