@@ -1,7 +1,7 @@
 import json
 import pygame
 
-from common import WHITE, STATS_TEXT_COLOR
+from common import STATS_TEXT_COLOR
 
 """
 games = Количество сыгранных игр
@@ -32,9 +32,9 @@ def render_stats(screen):
     with open("stats.json", "r") as stats_file_reader:
         stats = json.load(stats_file_reader)
 
-    font = pygame.font.SysFont("ComicSans", 32)
+    font = pygame.font.SysFont("ComicSans", 28)
     text = font.render("Статистика", True, "#DDDDDD")
-    screen.blit(text, ((screen.get_width() - text.get_width()) // 2, 350))
+    screen.blit(text, ((screen.get_width() - text.get_width()) // 2, 360))
 
     stats_keys = ["Количество сыгранных игр: ", "Количество смертей: ", "Количество убитых врагов: ",
                   "Количество взятых прокачек: ", "Количество взятого оружия: ",
@@ -46,7 +46,7 @@ def render_stats(screen):
     height = 400
 
     for i in range(len(stats_keys)):
-        stats_font = pygame.font.SysFont("ComicSans", 24)
+        stats_font = pygame.font.SysFont("ComicSans", 22)
         stat = stats_font.render(stats_keys[i] + stats[i], True, STATS_TEXT_COLOR)
         screen.blit(stat, ((screen.get_width() - stat.get_width()) // 2, height))
-        height += 35
+        height += 30
