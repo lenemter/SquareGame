@@ -20,9 +20,9 @@ from globals import (
 )
 import globals
 
-
 from bullet import Bullet
 from weapon import weapons
+from stats import update_stats
 
 
 class Player(pygame.sprite.Sprite):
@@ -162,6 +162,7 @@ class Player(pygame.sprite.Sprite):
         for weapon in weapon_hits:
             self.weapon = weapon.weapon_info
             weapon.kill()
+            update_stats({"weapons": 1})
 
     def move_single_axis(self, dx, dy):
         last_rect_x = self.rect.x
@@ -206,3 +207,4 @@ class Player(pygame.sprite.Sprite):
         else:
             self.health += heart.heal_amount
             heart.kill()
+            update_stats({"hearts": 1})

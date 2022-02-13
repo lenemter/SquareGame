@@ -11,6 +11,7 @@ from wall import Wall
 from heart import Heart
 from hud import HUD1
 from weapon import Weapon, weapons
+from stats import update_stats
 
 
 class TestLevel:
@@ -19,6 +20,7 @@ class TestLevel:
         self.hud_1 = None
         self.camera = Camera()
         self.load_map()
+        update_stats({"games": 1, "rooms": 1, "levels": 1})
 
     def load_map(self):
         test_level = f"levels/{random.randint(1, 3)}.txt"
