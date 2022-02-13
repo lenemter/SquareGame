@@ -20,6 +20,7 @@ screen = pygame.display.set_mode((common.window_size_x, common.window_size_y), p
 
 from test_level import launch_level
 from button import Button
+from stats import render_stats
 
 
 def main():
@@ -32,7 +33,7 @@ def main():
     play_button = Button(
         group=buttons_group,
         x=x_pos,
-        y=100,
+        y=250,
         w=BUTTON_SIZE_X,
         h=BUTTON_SIZE_Y,
         text="Играть",
@@ -40,23 +41,7 @@ def main():
         args=(screen,),
     )
 
-    collections_button = Button(
-        group=buttons_group,
-        x=x_pos,
-        y=175,
-        w=BUTTON_SIZE_X,
-        h=BUTTON_SIZE_Y,
-        text="Коллекции",
-    )
-
-    stats_button = Button(
-        group=buttons_group,
-        x=x_pos,
-        y=250,
-        w=BUTTON_SIZE_X,
-        h=BUTTON_SIZE_Y,
-        text="Статистика",
-    )
+    render_stats(screen)
 
     clock = pygame.time.Clock()
     running = True
@@ -64,8 +49,6 @@ def main():
     while running:
         screen.fill(BACKGROUND_COLOR)
         play_button.draw(screen)
-        collections_button.draw(screen)
-        stats_button.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 

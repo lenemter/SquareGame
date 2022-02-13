@@ -1,7 +1,6 @@
 import pygame
 from time import time_ns
 
-
 # Window
 window_size_x, window_size_y = (1280, 720)
 window_size_x_2, window_size_y_2 = (window_size_x // 2, window_size_y // 2)
@@ -21,7 +20,6 @@ FLY_LIMIT = 30
 WHITE = pygame.color.Color("white")
 PLAYER_COLOR = pygame.color.Color("blue")
 BACKGROUND_COLOR = pygame.color.Color("#333333")
-
 BUTTON_COLOR = pygame.color.Color("#555555")
 BUTTON_HOVER_COLOR = pygame.color.Color("#777777")
 BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 50
