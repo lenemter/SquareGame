@@ -21,7 +21,7 @@ WHITE = pygame.color.Color("white")
 PLAYER_COLOR = pygame.color.Color("blue")
 BACKGROUND_COLOR = pygame.color.Color("#333333")
 BUTTON_COLOR = pygame.color.Color("#555555")
-BUTTON_HOVER_COLOR = pygame.color.Color("#777777")
+BUTTON_HOVER_COLOR = pygame.color.Color("#878787")
 BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 50
 
 
