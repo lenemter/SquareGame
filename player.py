@@ -63,15 +63,11 @@ class Player(pygame.sprite.Sprite):
     def draw_weapon(self, surface, dx, dy):
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        player_center_x = self.x + self.w / 4
-        player_center_y = self.y + self.h / 4
+        player_center_x = self.x + self.w / 2
+        player_center_y = self.y + self.h / 2
 
         distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x
-        distance_y = (
-            (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y
-            - player_center_y
-            - self.weapon.l / 2
-        )
+        distance_y = (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y
         angle = math.atan2(distance_y, distance_x)  # in radians
         angle = angle * (180 / math.pi)  # to degrees
         image = pygame.transform.rotate(
@@ -79,7 +75,7 @@ class Player(pygame.sprite.Sprite):
                 self.weapon.image
                 if abs(angle) < 90
                 else pygame.transform.flip(self.weapon.image, False, True),
-                (self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y),
+                (self.w * 1.5 * BLOCK_SIZE_X, self.h * 1.5 * BLOCK_SIZE_Y),
             ),
             -angle,
         )
