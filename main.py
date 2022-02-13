@@ -16,7 +16,9 @@ from common import (
 )
 
 pygame.init()
-screen = pygame.display.set_mode((common.window_size_x, common.window_size_y), pygame.RESIZABLE)
+screen = pygame.display.set_mode(
+    (common.window_size_x, common.window_size_y), pygame.RESIZABLE
+)
 
 from test_level import launch_level
 from button import Button

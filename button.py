@@ -4,6 +4,7 @@ from common import (
     BUTTON_COLOR,
     BUTTON_HOVER_COLOR,
     WHITE,
+    get_time_ms,
 )
 from globals import gui_group_custom
 
@@ -24,6 +25,15 @@ class Button(pygame.sprite.Sprite):
         self.callback = callback
         self.args = args
         self.kwargs = kwargs
+
+        self.color_interval = 30
+        self.last_color_change = 0
+        self.color_change_speed = pygame.color.Color(
+            abs(self.color.r - BUTTON_HOVER_COLOR.r) // 10,
+            abs(self.color.g - BUTTON_HOVER_COLOR.g) // 10,
+            abs(self.color.b - BUTTON_HOVER_COLOR.b) // 10,
+            0,
+        )
 
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, (self.x, self.y, self.w, self.h), 0)
@@ -48,9 +58,11 @@ class Button(pygame.sprite.Sprite):
 
     def event_handler(self, events, events_types):
         if self.is_hovered():
-            self.color = BUTTON_HOVER_COLOR
+            if self.color != BUTTON_HOVER_COLOR:
+                self.color += self.color_change_speed
         else:
-            self.color = BUTTON_COLOR
+            if self.color != BUTTON_COLOR:
+                self.color -= self.color_change_speed
             return None
 
         if pygame.MOUSEBUTTONDOWN in events_types:
