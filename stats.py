@@ -1,7 +1,7 @@
 import json
 import pygame
 
-from common import WINDOW_SIZE_X
+from common import window_size_x
 
 """
 games = Количество сыгранных игр
@@ -34,7 +34,7 @@ def render_stats(surface):
 
     font = pygame.font.SysFont("ComicSans", 28)
     text = font.render("Статистика", True, "#DDDDDD")
-    surface.blit(text, ((WINDOW_SIZE_X - text.get_width()) // 2, 360))
+    surface.blit(text, ((window_size_x - text.get_width()) // 2, 360))
 
     stats_keys = ["Количество сыгранных игр: ", "Количество смертей: ", "Количество убитых врагов: ",
                   "Количество взятых прокачек: ", "Количество взятого оружия: ",
