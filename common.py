@@ -4,7 +4,7 @@ from time import time_ns
 # Window
 window_size_x, window_size_y = (1280, 720)
 window_size_x_2, window_size_y_2 = (window_size_x // 2, window_size_y // 2)
-WINDOW_NAME = "<Название>"
+WINDOW_NAME = "SquareGame"
 
 # Game
 BLOCK_SIZE_X, BLOCK_SIZE_Y = (72, 72)
