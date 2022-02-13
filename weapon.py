@@ -1,7 +1,6 @@
 import pygame
 from dataclasses import dataclass
 
-from common import BLOCK_SIZE_X, BLOCK_SIZE_Y
 from images import PISTOL, AK_47, BLASTER
 
 
@@ -24,10 +23,7 @@ weapons = (
         0.25,
         0.25,
         pygame.color.Color("#FFC82C"),
-        pygame.transform.scale(
-            PISTOL,
-            (0.5 * BLOCK_SIZE_X, 0.5 * BLOCK_SIZE_Y),
-        ),
+        PISTOL,
     ),
     WeaponInfo(
         "Автомат",
@@ -36,10 +32,7 @@ weapons = (
         0.2,
         0.2,
         pygame.color.Color("#FFC82C"),
-        pygame.transform.scale(
-            AK_47,
-            (0.5 * BLOCK_SIZE_X, 0.5 * BLOCK_SIZE_Y),
-        ),
+        AK_47,
     ),
     WeaponInfo(
         "Бластер",
@@ -48,9 +41,6 @@ weapons = (
         0.2,
         0.2,
         pygame.color.Color("#FFC82C"),
-        pygame.transform.scale(
-            BLASTER,
-            (0.5 * BLOCK_SIZE_X, 0.5 * BLOCK_SIZE_Y),
-        ),
+        BLASTER,
     ),
 )
