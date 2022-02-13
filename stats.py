@@ -23,6 +23,3 @@ def statistics(added_stats):
 
     with open("stats.json", "w") as stats_file_writer:
         json.dump(stats, stats_file_writer)
-
-
-statistics({"games": 1, "deaths": 111})
