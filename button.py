@@ -10,7 +10,7 @@ from globals import gui_group_custom
 
 class Button(pygame.sprite.Sprite):
     def __init__(
-        self, group, x, y, w, h, text="", callback=None, args=tuple(), kwargs=dict()
+            self, group, x, y, w, h, text="", callback=None, args=tuple(), kwargs=dict()
     ):
         super().__init__(gui_group_custom, group)
 
@@ -42,8 +42,8 @@ class Button(pygame.sprite.Sprite):
     def is_hovered(self):
         mouse_position = pygame.mouse.get_pos()
         return (
-            self.x < mouse_position[0] < self.x + self.w
-            and self.y < mouse_position[1] < self.y + self.h
+                self.x < mouse_position[0] < self.x + self.w
+                and self.y < mouse_position[1] < self.y + self.h
         )
 
     def event_handler(self, events, events_types):
