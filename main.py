@@ -41,14 +41,13 @@ def main():
         args=(screen,),
     )
 
-    render_stats(screen)
-
     clock = pygame.time.Clock()
     running = True
 
     while running:
         screen.fill(BACKGROUND_COLOR)
         play_button.draw(screen)
+        render_stats(screen)
         pygame.display.flip()
         clock.tick(FPS)
 
