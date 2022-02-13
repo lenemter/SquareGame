@@ -68,7 +68,6 @@ class Weapon(pygame.sprite.Sprite):
         globals.entropy += entropy_step
 
     def draw(self, surface, dx, dy):
-        print(self.rect.x, self.rect.y)
         x = self.x * BLOCK_SIZE_X + dx
         y = self.y * BLOCK_SIZE_Y + dy
 
