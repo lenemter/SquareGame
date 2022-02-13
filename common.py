@@ -8,7 +8,6 @@ window_size_x_2, window_size_y_2 = (window_size_x // 2, window_size_y // 2)
 WINDOW_NAME = "<Название>"
 
 # Game
-TEST_LEVEL = "levels/test_level.txt"
 BLOCK_SIZE_X, BLOCK_SIZE_Y = (72, 72)
 FPS = 120
 

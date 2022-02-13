@@ -76,16 +76,20 @@ class Player(pygame.sprite.Sprite):
         angle = angle * (180 / math.pi)  # to degrees
         image = pygame.transform.rotate(
             pygame.transform.scale(
-                self.weapon.image if abs(angle) < 90 else pygame.transform.flip(self.weapon.image, False, True),
-                (self.w * 0.7 * BLOCK_SIZE_X, self.h * 0.7 * BLOCK_SIZE_Y)
+                self.weapon.image
+                if abs(angle) < 90
+                else pygame.transform.flip(self.weapon.image, False, True),
+                (self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y),
             ),
             -angle,
         )
         surface.blit(
             image,
-            (
-                (self.x + self.w / 2 - self.w * 0.5 * 0.7) * BLOCK_SIZE_X + dx,
-                (self.y + self.h / 2 - self.h * 0.5 * 0.7) * BLOCK_SIZE_Y + dy,
+            image.get_rect(
+                center=(
+                    self.rect.x + self.w / 2 * BLOCK_SIZE_X,
+                    self.rect.y + self.h / 2 * BLOCK_SIZE_Y,
+                )
             ),
         )
 
