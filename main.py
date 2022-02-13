@@ -48,30 +48,10 @@ def main():
         args=(screen,),
     )
 
-    collections_button = Button(
-        group=buttons_group,
-        x=x_pos,
-        y=175,
-        w=BUTTON_SIZE_X,
-        h=BUTTON_SIZE_Y,
-        text="Коллекции",
-    )
-
-    stats_button = Button(
-        group=buttons_group,
-        x=x_pos,
-        y=250,
-        w=BUTTON_SIZE_X,
-        h=BUTTON_SIZE_Y,
-        text="Статистика",
-    )
-
     running = True
 
     while running:
         play_button.draw(screen)
-        collections_button.draw(screen)
-        stats_button.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
 

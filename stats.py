@@ -12,7 +12,7 @@ levels = Количество пройденных уровней
 """
 
 
-def statistics(added_stats):
+def update_stats(added_stats):
     with open("stats.json", "r") as stats_file_reader:
         stats = json.load(stats_file_reader)
 
