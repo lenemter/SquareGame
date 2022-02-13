@@ -39,7 +39,7 @@ class Button(pygame.sprite.Sprite):
         pygame.draw.rect(surface, self.color, (self.x, self.y, self.w, self.h), 0)
 
         if self.text != "":
-            font = pygame.font.SysFont("ComicSans", 32)
+            font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 24)
             text = font.render(self.text, True, WHITE)
             surface.blit(
                 text,
@@ -73,7 +73,7 @@ class Button(pygame.sprite.Sprite):
                 self.color -= self.color_change_speed
             return None
 
-        if pygame.MOUSEBUTTONDOWN in events_types:
+        if pygame.MOUSEBUTTONUP in events_types:
             if self.callback is None:
                 print(f'Кнопка "{self.text}" нажата')
             else:
