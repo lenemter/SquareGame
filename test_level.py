@@ -9,6 +9,7 @@ from player import Player
 from wall import Wall
 from heart import Heart
 from hud import HUD1
+from weapon import Weapon, weapons
 
 
 class TestLevel:
@@ -31,6 +32,8 @@ class TestLevel:
                     self.hud_1 = HUD1(self.player)
                 elif cell == "H":
                     Heart(x, y)
+                elif cell == "B":
+                    Weapon(x, y, weapons[2])
 
     def event_handler(self, events, events_types, time):
         for bullet in player_bullet_group:

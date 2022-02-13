@@ -15,10 +15,11 @@ from globals import (
     hearts_group,
     player_bullet_group,
     walls_group,
-    entropy,
-    entropy_step,
+    weapon_group,
+    entropy_step
 )
-from images import HEART_IMAGE, BAD_HEART_IMAGE
+import globals
+
 
 from bullet import Bullet
 from weapon import weapons
@@ -27,7 +28,6 @@ from weapon import weapons
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__(game_group_1)
-        global entropy
 
         # Basic stuff
         self.x = x
@@ -35,9 +35,9 @@ class Player(pygame.sprite.Sprite):
         self.w = 0.6
         self.h = 0.6
         self.rect = pygame.Rect(
-            entropy, entropy, self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y
+            globals.entropy, globals.entropy, self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y
         )
-        entropy += entropy_step
+        globals.entropy += entropy_step
 
         # Camera
         self.last_camera_dx = 0
@@ -122,6 +122,12 @@ class Player(pygame.sprite.Sprite):
                 self.weapon.damage,
                 self.weapon.color,
             )
+
+        # Weapon pickup
+        weapon_hits = pygame.sprite.spritecollide(self, weapon_group, False)
+        for weapon in weapon_hits:
+            self.weapon = weapon.weapon_info
+            weapon.kill()
 
     def move_single_axis(self, dx, dy):
         last_rect_x = self.rect.x
