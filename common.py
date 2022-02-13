@@ -17,13 +17,15 @@ HEALTH_LIMIT = 3
 FLY_LIMIT = 30
 
 # Colors
-WHITE = pygame.color.Color("white")
-PLAYER_COLOR = pygame.color.Color("blue")
-BACKGROUND_COLOR = pygame.color.Color("#333333")
-BUTTON_COLOR = pygame.color.Color("#555555")
-BUTTON_HOVER_COLOR = pygame.color.Color("#878787")
-BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 50
+WHITE = pygame.color.Color("#fAf8FF")
+PLAYER_COLOR = pygame.color.Color("#3745F5")
+BACKGROUND_COLOR = pygame.color.Color("#1E2331")
 
+BUTTON_COLOR = pygame.color.Color("#33505D")
+BUTTON_HOVER_COLOR = pygame.color.Color("#51827B")
+BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 60
+
+STATS_COLOR = pygame.color.Color("#DDDDDD")
 
 def get_time_ms():
     return time_ns() // 1_000_000

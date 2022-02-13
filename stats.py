@@ -1,7 +1,7 @@
 import json
 import pygame
 
-from common import window_size_x
+from common import window_size_x, STATS_COLOR
 
 """
 games = Количество сыгранных игр
@@ -55,6 +55,6 @@ def render_stats(surface):
         stats_font = pygame.font.Font(
             "fonts/Press_Start_2P/PressStart2P-Regular.ttf", 16
         )
-        stat = stats_font.render(stats_keys[i] + stats[i], True, "#BBBBBB")
+        stat = stats_font.render(stats_keys[i] + stats[i], True, STATS_COLOR)
         surface.blit(stat, ((surface.get_width() - stat.get_width()) // 2, height))
         height += 30

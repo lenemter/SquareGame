@@ -25,7 +25,7 @@ weapons = (
         250,
         0.25,
         0.25,
-        pygame.color.Color("#FFC82C"),
+        pygame.color.Color("#FDD344"),
         PISTOL,
     ),
     WeaponInfo(
@@ -34,7 +34,7 @@ weapons = (
         160,
         0.2,
         0.2,
-        pygame.color.Color("#FFC82C"),
+        pygame.color.Color("#FDD344"),
         AK_47,
     ),
     WeaponInfo(
@@ -43,7 +43,7 @@ weapons = (
         180,
         0.2,
         0.2,
-        pygame.color.Color("#FFC82C"),
+        pygame.color.Color("#FDD344"),
         BLASTER,
     ),
 )
