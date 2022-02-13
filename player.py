@@ -16,7 +16,7 @@ from globals import (
     player_bullet_group,
     walls_group,
     weapon_group,
-    entropy_step
+    entropy_step,
 )
 import globals
 
@@ -35,7 +35,10 @@ class Player(pygame.sprite.Sprite):
         self.w = 0.6
         self.h = 0.6
         self.rect = pygame.Rect(
-            globals.entropy, globals.entropy, self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y
+            globals.entropy,
+            globals.entropy,
+            self.w * BLOCK_SIZE_X,
+            self.h * BLOCK_SIZE_Y,
         )
         globals.entropy += entropy_step
 
@@ -54,6 +57,37 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = self.x * BLOCK_SIZE_X + dx
         self.rect.y = self.y * BLOCK_SIZE_Y + dy
         pygame.draw.rect(surface, PLAYER_COLOR, self.rect, 0)
+
+        self.draw_weapon(surface, dx, dy)
+
+    def draw_weapon(self, surface, dx, dy):
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+        player_center_x = self.x + self.w / 4
+        player_center_y = self.y + self.h / 4
+
+        distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x
+        distance_y = (
+            (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y
+            - player_center_y
+            - self.weapon.l / 2
+        )
+        angle = math.atan2(distance_y, distance_x)  # in radians
+        angle = angle * (180 / math.pi)  # to degrees
+        image = pygame.transform.rotate(
+            pygame.transform.scale(
+                self.weapon.image if abs(angle) < 90 else pygame.transform.flip(self.weapon.image, False, True),
+                (self.w * 0.7 * BLOCK_SIZE_X, self.h * 0.7 * BLOCK_SIZE_Y)
+            ),
+            -angle,
+        )
+        surface.blit(
+            image,
+            (
+                (self.x + self.w / 2 - self.w * 0.5 * 0.7) * BLOCK_SIZE_X + dx,
+                (self.y + self.h / 2 - self.h * 0.5 * 0.7) * BLOCK_SIZE_Y + dy,
+            ),
+        )
 
     def event_handler(self, events, events_types, time):
         keys = pygame.key.get_pressed()

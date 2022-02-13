@@ -32,6 +32,10 @@ class TestLevel:
                     self.hud_1 = HUD1(self.player)
                 elif cell == "H":
                     Heart(x, y)
+                elif cell == "P":
+                    Weapon(x, y, weapons[0])
+                elif cell == "A":
+                    Weapon(x, y, weapons[1])
                 elif cell == "B":
                     Weapon(x, y, weapons[2])
 
