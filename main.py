@@ -23,6 +23,7 @@ pygame.display.set_caption(WINDOW_NAME)
 
 from test_level import launch_level
 from button import Button
+from stats import render_stats
 
 
 def main():
@@ -40,13 +41,15 @@ def main():
     play_button = Button(
         group=buttons_group,
         x=x_pos,
-        y=100,
+        y=250,
         w=BUTTON_SIZE_X,
         h=BUTTON_SIZE_Y,
         text="Играть",
         callback=launch_level,
         args=(screen,),
     )
+
+    render_stats(screen)
 
     running = True
 

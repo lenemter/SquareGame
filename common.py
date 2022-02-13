@@ -25,6 +25,7 @@ PLAYER_BULLET_COLOR = pygame.color.Color("cadetblue4")
 BACKGROUND_COLOR = pygame.color.Color("#333333")
 BUTTON_COLOR = pygame.color.Color("#555555")
 BUTTON_HIGHLIGHT_COLOR = pygame.color.Color("#777777")
+STATS_TEXT_COLOR = pygame.color.Color("#BBBBBB")
 
 BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 50
 
