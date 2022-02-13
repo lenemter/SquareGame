@@ -72,6 +72,7 @@ def main():
                 common.window_size_y = event.h
                 common.window_size_y_2 = event.h // 2
                 x_pos = (event.w - BUTTON_SIZE_X) // 2
+                play_button.x = x_pos
 
         for button in buttons_group:
             result = button.event_handler(events, events_types)
