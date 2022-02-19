@@ -11,8 +11,8 @@ from common import (
     get_time_ms,
 )
 from globals import (
-    enemy_group,
-    player_bullet_group,
+    game_group_3,
+    enemy_bullet_group,
     walls_group,
     weapon_group,
     entropy_step,
@@ -26,14 +26,15 @@ from stats import update_stats
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        super().__init__(enemy_group)
+    def __init__(self, x, y, player):
+        super().__init__(game_group_3)
 
         # Basic stuff
         self.x = x
         self.y = y
-        self.w = 1
-        self.h = 1
+        self.player = player
+        self.w = 0.5
+        self.h = 0.5
         self.rect = pygame.Rect(
             globals.entropy,
             globals.entropy,
@@ -53,6 +54,8 @@ class Enemy(pygame.sprite.Sprite):
         self.weapon = weapons[0]
         self.last_shooting_time = get_time_ms()
 
+        self.handle_movement()
+
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
         self.last_camera_dy = dy
@@ -60,16 +63,14 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = self.y * BLOCK_SIZE_Y + dy
         pygame.draw.rect(surface, ENEMY_COLOR, self.rect, 0)
 
-        # self.draw_weapon(surface, dx, dy)
+        self.draw_weapon(surface, dx, dy)
 
     def draw_weapon(self, surface, dx, dy):
-        mouse_x, mouse_y = pygame.mouse.get_pos()
+        enemy_center_x = self.x + self.w / 2
+        enemy_center_y = self.y + self.h / 2
 
-        player_center_x = self.x + self.w / 2
-        player_center_y = self.y + self.h / 2
-
-        distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x
-        distance_y = (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y
+        distance_x = self.player.x - enemy_center_x
+        distance_y = self.player.y - enemy_center_y
         angle = math.atan2(distance_y, distance_x)  # in radians
         angle = angle * (180 / math.pi)  # to degrees
         image = pygame.transform.rotate(
@@ -92,16 +93,13 @@ class Enemy(pygame.sprite.Sprite):
         )
 
     def event_handler(self, events, events_types, time):
-        pass
-        # Movement
-        # self.handle_movement(time)
         # Shooting
-        # self.handle_shooting()
+        self.handle_shooting()
 
-    def handle_movement(self, time):
+    def handle_movement(self):
         # keys = pygame.key.get_pressed()
-        dx = (self.x * BASE_SPEED * time)
-        dy = (self.y * BASE_SPEED * time)
+        dx = (self.x * BASE_SPEED)
+        dy = (self.y * BASE_SPEED)
 
         if dx != 0:
             self.move_single_axis(dx, 0)
@@ -109,20 +107,20 @@ class Enemy(pygame.sprite.Sprite):
             self.move_single_axis(0, dy)
 
     def move_single_axis(self, dx, dy):
-        last_rect_x = self.rect.x
-        last_rect_y = self.rect.y
+        last_rect_x = self.player.x
+        last_rect_y = self.player.y
 
         self.x += dx
-        self.rect.x = int(self.x * BLOCK_SIZE_X + self.last_camera_dx)
+        self.rect.x = int(self.x * BLOCK_SIZE_X + self.player.x)
         if self.rect.x == last_rect_x and dx != 0:
-            self.x -= dx
+            self.x -= self.player.x
             self.rect.x = last_rect_x
             return None
 
         self.y += dy
-        self.rect.y = int(self.y * BLOCK_SIZE_Y + self.last_camera_dy)
+        self.rect.y = int(self.y * BLOCK_SIZE_Y + self.player.y)
         if self.rect.y == last_rect_y and dy != 0:
-            self.y -= dy
+            self.y -= self.player.y
             self.rect.y = last_rect_y
             return None
 
@@ -149,30 +147,20 @@ class Enemy(pygame.sprite.Sprite):
         if get_time_ms() >= self.last_shooting_time + self.weapon.delay:
             self.last_shooting_time = get_time_ms()
 
-            mouse_x, mouse_y = pygame.mouse.get_pos()
+            enemy_center_x = self.x + (self.w - self.weapon.w) / 2
+            enemy_center_y = self.y + (self.h - self.weapon.l) / 2
 
-            player_center_x = self.x + (self.w - self.weapon.w) / 2
-            player_center_y = self.y + (self.h - self.weapon.l) / 2
-
-            distance_x = (
-                    (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X
-                    - player_center_x
-                    - self.weapon.w / 2
-            )
-            distance_y = (
-                    (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y
-                    - player_center_y
-                    - self.weapon.l / 2
-            )
+            distance_x = self.player.x - enemy_center_x - self.weapon.w / 2
+            distance_y = self.player.y - enemy_center_y - self.weapon.l / 2
             angle = math.atan2(distance_y, distance_x)
 
             speed_x = math.cos(angle) * BULLET_SPEED
             speed_y = math.sin(angle) * BULLET_SPEED
 
             Bullet(
-                player_bullet_group,
-                player_center_x,
-                player_center_y,
+                enemy_bullet_group,
+                enemy_center_x,
+                enemy_center_y,
                 speed_x,
                 speed_y,
                 self.weapon.w,
@@ -180,10 +168,3 @@ class Enemy(pygame.sprite.Sprite):
                 self.weapon.damage,
                 self.weapon.color,
             )
-
-    def handle_weapon(self):
-        weapon_hits = pygame.sprite.spritecollide(self, weapon_group, False)
-        for weapon in weapon_hits:
-            if weapon.weapon_info != self.weapon:
-                self.weapon = weapon.weapon_info
-                weapon.kill()

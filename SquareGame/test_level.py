@@ -21,6 +21,7 @@ class TestLevel:
         self.hud_1 = None
         self.enemy = None
         self.camera = Camera()
+        self.player_x, self.player_y = 0, 0
         self.load_map()
         update_stats({"games": 1, "rooms": 1, "levels": 1})
 
@@ -45,7 +46,7 @@ class TestLevel:
                 elif cell == "B":
                     Weapon(x, y, weapons[2])
                 elif cell == "E":
-                    self.enemy = Enemy(x, y)
+                    self.enemy = Enemy(x, y, self.player)
 
     def event_handler(self, events, events_types, time):
         for bullet in player_bullet_group:
