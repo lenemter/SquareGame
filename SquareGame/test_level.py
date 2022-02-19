@@ -7,6 +7,7 @@ from globals import player_bullet_group
 
 from camera import Camera
 from player import Player
+from enemy import Enemy
 from wall import Wall
 from heart import Heart
 from hud import HUD1
@@ -18,6 +19,7 @@ class TestLevel:
     def __init__(self):
         self.player = None
         self.hud_1 = None
+        self.enemy = None
         self.camera = Camera()
         self.load_map()
         update_stats({"games": 1, "rooms": 1, "levels": 1})
@@ -42,6 +44,8 @@ class TestLevel:
                     Weapon(x, y, weapons[1])
                 elif cell == "B":
                     Weapon(x, y, weapons[2])
+                elif cell == "E":
+                    self.enemy = Enemy(x, y)
 
     def event_handler(self, events, events_types, time):
         for bullet in player_bullet_group:

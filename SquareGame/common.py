@@ -29,6 +29,8 @@ BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 60
 
 STATS_COLOR = pygame.color.Color("#DDDDDD")
 
+ENEMY_COLOR = pygame.color.Color("#FF0000")
+
 
 def get_time_ms():
     return time_ns() // 1_000_000
