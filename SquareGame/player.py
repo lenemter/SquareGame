@@ -1,5 +1,5 @@
 import pygame
-import math
+from math import pi, atan2, sin, cos
 
 from common import (
     BLOCK_SIZE_X,
@@ -24,6 +24,7 @@ from bullet import Bullet
 from weapon import weapons
 from stats import update_stats
 
+to_deg = 180 / pi
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -68,10 +69,10 @@ class Player(pygame.sprite.Sprite):
         player_center_x = self.x + self.w / 2
         player_center_y = self.y + self.h / 2
 
-        distance_x = (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X - player_center_x
-        distance_y = (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y - player_center_y
-        angle = math.atan2(distance_y, distance_x)  # in radians
-        angle = angle * (180 / math.pi)  # to degrees
+        distance_x = (mouse_x - dx) / BLOCK_SIZE_X - player_center_x
+        distance_y = (mouse_y - dy) / BLOCK_SIZE_Y - player_center_y
+        angle = atan2(distance_y, distance_x)  # in radians
+        angle = angle * to_deg  # to degrees
         image = pygame.transform.rotate(
             pygame.transform.scale(
                 self.weapon.image
@@ -91,7 +92,7 @@ class Player(pygame.sprite.Sprite):
             ),
         )
 
-    def event_handler(self, events, events_types, time):
+    def event_handler(self, time):
         # Movement
         self.handle_movement(time)
         # Hearts
@@ -194,10 +195,10 @@ class Player(pygame.sprite.Sprite):
                 - player_center_y
                 - self.weapon.l / 2
             )
-            angle = math.atan2(distance_y, distance_x)
+            angle = atan2(distance_y, distance_x)
 
-            speed_x = math.cos(angle) * BULLET_SPEED
-            speed_y = math.sin(angle) * BULLET_SPEED
+            speed_x = cos(angle) * BULLET_SPEED
+            speed_y = sin(angle) * BULLET_SPEED
 
             Bullet(
                 player_bullet_group,

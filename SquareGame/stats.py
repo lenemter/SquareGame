@@ -1,3 +1,7 @@
+import os
+
+os.chdir(os.path.abspath(os.path.dirname(__file__)))
+
 import json
 import pygame
 

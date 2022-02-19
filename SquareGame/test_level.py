@@ -17,7 +17,6 @@ from stats import update_stats
 class TestLevel:
     def __init__(self):
         self.player = None
-        self.hud_1 = None
         self.camera = Camera()
         self.load_map()
         update_stats({"games": 1, "rooms": 1, "levels": 1})
@@ -33,7 +32,7 @@ class TestLevel:
                     Wall(x, y)
                 elif cell == "@":
                     self.player = Player(x, y)
-                    self.hud_1 = HUD1(self.player)
+                    HUD1(self.player)
                 elif cell == "H":
                     Heart(x, y)
                 elif cell == "P":
@@ -43,10 +42,10 @@ class TestLevel:
                 elif cell == "B":
                     Weapon(x, y, weapons[2])
 
-    def event_handler(self, events, events_types, time):
+    def event_handler(self, time):
         for bullet in player_bullet_group:
             bullet.event_handler(time)
-        self.player.event_handler(events, events_types, time)
+        self.player.event_handler(time)
 
     def draw(self, surface):
         self.camera.update(self.player)
@@ -59,19 +58,15 @@ def launch_level(surface):
     running = True
 
     while running:
-        events = pygame.event.get()
-        events_types = {event.type for event in events}
-
-        if pygame.QUIT in events_types:
-            running = False
-            break
-
-        for event in events:
+        for event in pygame.event.get():
             if event.type == pygame.VIDEORESIZE:
                 common.window_size_x_2 = event.w // 2
                 common.window_size_y_2 = event.h // 2
+            elif event.type == pygame.QUIT:
+                running = False
+                break
 
-        level.event_handler(events, events_types, clock.tick(FPS))
+        level.event_handler(clock.tick(FPS))
 
         level.draw(surface)
         pygame.display.flip()

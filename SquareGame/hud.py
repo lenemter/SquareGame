@@ -6,6 +6,7 @@ from images import HEART_IMAGE, BAD_HEART_IMAGE
 
 
 class HUD1(pygame.sprite.Sprite):
+    # can be optimized
     def __init__(self, player):
         super().__init__(gui_group_1)
 

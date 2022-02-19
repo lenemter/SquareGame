@@ -1,7 +1,8 @@
 # Removes "Hello from the pygame community. https://www.pygame.org/contribute.html"
-from os import environ
+import os
 
-environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
+os.chdir(os.path.abspath(os.path.dirname(__file__)))
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
 import pygame
 import logging
@@ -22,9 +23,31 @@ screen = pygame.display.set_mode(
     (common.window_size_x, common.window_size_y), pygame.RESIZABLE
 )
 
-from test_level import launch_level
 from button import Button
 from stats import render_stats
+from level_generator import generate_level
+
+
+def launch_level(surface):
+    level = generate_level()
+    clock = pygame.time.Clock()
+    running = True
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.VIDEORESIZE:
+                common.window_size_x_2 = event.w // 2
+                common.window_size_y_2 = event.h // 2
+            elif event.type == pygame.QUIT:
+                running = False
+                break
+
+        level.event_handler(clock.tick(FPS))
+
+        level.draw(surface)
+        pygame.display.flip()
+
+    pygame.quit()
 
 
 def main():
