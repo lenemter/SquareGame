@@ -1,7 +1,9 @@
 import os.path
 import logging
 import pygame
+import os
 
+os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
 def load_image(name):
     if not os.path.isfile(name):

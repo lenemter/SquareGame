@@ -1,7 +1,7 @@
 # Removes "Hello from the pygame community. https://www.pygame.org/contribute.html"
-from os import environ
+import os
 
-environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
 import pygame
 import logging

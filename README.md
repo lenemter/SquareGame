@@ -18,4 +18,6 @@ SquareGame — RPG игра с квадратиком, который бегае
 
 ### Скриншоты
 
-Work in progress...
+![Menu](1.png)
+![Game](2.png)
+![Game 2](3.png)
