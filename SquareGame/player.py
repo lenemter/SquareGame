@@ -11,7 +11,7 @@ from common import (
     get_time_ms,
 )
 from globals import (
-    game_group_1,
+    game_group_2,
     hearts_group,
     player_bullet_group,
     walls_group,
@@ -28,7 +28,7 @@ to_deg = 180 / pi
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        super().__init__(game_group_1)
+        super().__init__(game_group_2)
 
         # Basic stuff
         self.x = x
@@ -51,6 +51,7 @@ class Player(pygame.sprite.Sprite):
         self.health_limit = BASE_HEALTH_LIMIT
         self.health = BASE_HEALTH_LIMIT
 
+        # Weapon
         self.weapon = weapons[0]
         self.last_shooting_time = get_time_ms()
 

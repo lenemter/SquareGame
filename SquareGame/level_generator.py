@@ -8,6 +8,7 @@ from player import Player
 from wall import Wall
 from heart import Heart
 from hud import HUD1
+from portal import Portal
 from weapon import Weapon, weapons
 from stats import update_stats
 
@@ -98,18 +99,19 @@ def generate_level_layout(min_rooms=5, max_rooms=12):
     # Then they'll be drawn
 
 
-class Corridor:
-    def __init__(self, start_room, end_room):
-        self.start_room = start_room
-        self.end_room = end_room
+# class Corridor:
+#     def __init__(self, start_room, end_room):
+#         self.start_room = start_room
+#         self.end_room = end_room
 
-    def create_objects(self):
-        pass
+#     def create_objects(self):
+#         pass
 
 
 class Room:
     def __init__(self, x: int, y: int):
-        global rooms_count, rooms_plan
+        global rooms_count
+        global rooms_plan
 
         self.name = "<Room name>"
         self.x = x
@@ -122,10 +124,32 @@ class Room:
     def create_objects(self, level):
         name = self.name
 
+        room_center = (
+            self.x * ROOM_SIZE + ROOM_SIZE // 2,
+            self.y * ROOM_SIZE + ROOM_SIZE // 2,
+        )
+
         if name == "The begining":
-            level.player = Player(self.x * ROOM_SIZE // 2, self.y * ROOM_SIZE // 2)
+            level.player = Player(*room_center)
         elif name == "Portal":
+            Portal(*room_center)
+        elif name == "Regular room":
             pass
+        elif name == "Buff room":
+            Heart(*room_center)
+
+        # Create walls
+        room_x = self.x * ROOM_SIZE
+        room_y = self.y * ROOM_SIZE
+        for x in range(ROOM_SIZE):
+            Wall(room_x - self.x + x, room_y - self.y)
+            Wall(room_x - self.x + x, room_y - self.y + ROOM_SIZE - 1)
+        for y in range(ROOM_SIZE):
+            Wall(room_x - self.x, room_y - self.y + y)
+            Wall(room_x - self.x + ROOM_SIZE - 1, room_y - self.y + y)
+
+        for child in self.children:
+            child.create_objects(level)
 
 
 def generate_level():
