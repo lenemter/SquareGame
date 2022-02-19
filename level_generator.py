@@ -82,4 +82,5 @@ class Room:
         rooms_plan[self.x, self.y] = self
 
 
-def generate_level()
+def generate_level():
+    pass
