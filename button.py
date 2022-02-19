@@ -1,6 +1,7 @@
 import pygame
 
 from common import (
+    FONT_ANTIALIAS,
     BUTTON_COLOR,
     BUTTON_HOVER_COLOR,
     WHITE,
@@ -35,12 +36,15 @@ class Button(pygame.sprite.Sprite):
             0,
         )
 
+        self.font = pygame.font.Font(
+            "fonts/Press_Start_2P/PressStart2P-Regular.ttf", 24
+        )
+
     def draw(self, surface):
         pygame.draw.rect(surface, self.color, (self.x, self.y, self.w, self.h), 0)
 
         if self.text != "":
-            font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 24)
-            text = font.render(self.text, True, WHITE)
+            text = self.font.render(self.text, FONT_ANTIALIAS, WHITE)
             surface.blit(
                 text,
                 (

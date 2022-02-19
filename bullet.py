@@ -2,7 +2,7 @@ import pygame
 import math
 
 from globals import game_group_2, walls_group
-from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, FLY_LIMIT
+from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, BULLET_FLY_LIMIT
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -37,7 +37,7 @@ class Bullet(pygame.sprite.Sprite):
             abs(self.start_x * self.start_x - self.x * self.x)
             + abs(self.start_y * self.start_y - self.y * self.y)
         )  # Distance between start and end
-        if fly_distance > FLY_LIMIT or pygame.sprite.spritecollideany(
+        if fly_distance > BULLET_FLY_LIMIT or pygame.sprite.spritecollideany(
             self, walls_group
         ):
             self.kill()

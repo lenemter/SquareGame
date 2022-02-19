@@ -10,10 +10,11 @@ import common
 from common import (
     WINDOW_NAME,
     FPS,
+    FONT_ANTIALIAS,
     BACKGROUND_COLOR,
     BUTTON_SIZE_X,
     BUTTON_SIZE_Y,
-    STATS_COLOR
+    STATS_COLOR,
 )
 
 pygame.init()
@@ -44,14 +45,15 @@ def main():
         args=(screen,),
     )
 
+    title_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 44)
+
     clock = pygame.time.Clock()
     running = True
 
     while running:
         screen.fill(BACKGROUND_COLOR)
-        
-        font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 44)
-        text = font.render(WINDOW_NAME, True, STATS_COLOR)
+
+        text = title_font.render(WINDOW_NAME, FONT_ANTIALIAS, STATS_COLOR)
         screen.blit(text, ((common.window_size_x - text.get_width()) // 2, 120))
 
         play_button.draw(screen)

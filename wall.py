@@ -14,11 +14,14 @@ class Wall(pygame.sprite.Sprite):
         self.w = 1
         self.h = 1
         self.rect = pygame.Rect(
-            globals.entropy, globals.entropy, self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y
+            globals.entropy,
+            globals.entropy,
+            self.w * BLOCK_SIZE_X,
+            self.h * BLOCK_SIZE_Y,
         )
         globals.entropy += entropy_step
 
     def draw(self, surface, dx, dy):
         self.rect.x = self.x * BLOCK_SIZE_X + dx
         self.rect.y = self.y * BLOCK_SIZE_Y + dy
-        pygame.draw.rect(surface, WHITE, self.rect, 1)
+        pygame.draw.rect(surface, WHITE, self.rect, 4)
