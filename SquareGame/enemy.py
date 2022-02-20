@@ -28,13 +28,12 @@ from weapon import weapons
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, player):
+    def __init__(self, x, y):
         super().__init__(game_group_3, enemy_group)
 
         # Basic stuff
         self.x = x
         self.y = y
-        self.player = player
         self.w = 0.6
         self.h = 0.6
         self.rect = pygame.Rect(
@@ -59,6 +58,9 @@ class Enemy(pygame.sprite.Sprite):
 
         self.delay = random.randint(0, 1000)
 
+        # Room activity
+        self.is_active = False
+
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
         self.last_camera_dy = dy
@@ -72,8 +74,8 @@ class Enemy(pygame.sprite.Sprite):
         enemy_center_x = self.x + self.w / 2
         enemy_center_y = self.y + self.h / 2
 
-        distance_x = self.player.x - enemy_center_x
-        distance_y = self.player.y - enemy_center_y
+        distance_x = globals.game.player.x - enemy_center_x
+        distance_y = globals.game.player.y - enemy_center_y
         angle = math.atan2(distance_y, distance_x)  # in radians
         angle = angle * TO_DEG  # to degrees
         image = pygame.transform.rotate(
@@ -96,27 +98,28 @@ class Enemy(pygame.sprite.Sprite):
         )
 
     def event_handler(self, time):
-        # Shooting
-        self.handle_shooting()
-        # Movement
-        self.handle_movement(time)
+        if self.is_active:
+            # Shooting
+            self.handle_shooting()
+            # Movement
+            self.handle_movement(time)
 
-        bullet_hits = pygame.sprite.spritecollide(self, player_bullet_group, False)
+            bullet_hits = pygame.sprite.spritecollide(self, player_bullet_group, False)
 
-        for bullet in bullet_hits:
-            self.health -= bullet.damage
-            if self.health <= 0:
-                self.kill()
-            bullet.kill()
+            for bullet in bullet_hits:
+                self.health -= bullet.damage
+                if self.health <= 0:
+                    self.kill()
+                bullet.kill()
 
     def handle_movement(self, time):
         dx = (
-            (ENEMY_SPEED if self.player.x > self.x else -ENEMY_SPEED)
+            (ENEMY_SPEED if globals.game.player.x > self.x else -ENEMY_SPEED)
             * BASE_SPEED
             * time
         )
         dy = (
-            (ENEMY_SPEED if self.player.y > self.y else -ENEMY_SPEED)
+            (ENEMY_SPEED if globals.game.player.y > self.y else -ENEMY_SPEED)
             * BASE_SPEED
             * time
         )
@@ -173,8 +176,8 @@ class Enemy(pygame.sprite.Sprite):
             enemy_center_x = self.x + (self.w - self.weapon.w) / 2
             enemy_center_y = self.y + (self.h - self.weapon.l) / 2
 
-            distance_x = self.player.x - enemy_center_x - self.weapon.w / 2
-            distance_y = self.player.y - enemy_center_y - self.weapon.l / 2
+            distance_x = globals.game.player.x - enemy_center_x - self.weapon.w / 2
+            distance_y = globals.game.player.y - enemy_center_y - self.weapon.l / 2
             angle = math.atan2(distance_y, distance_x)
 
             speed_x = (math.cos(angle) * BULLET_SPEED) * 0.6
