@@ -131,16 +131,16 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         dx = (
                 (
-                        max(keys[pygame.K_RIGHT], keys[pygame.K_d])
-                        - max(keys[pygame.K_LEFT], keys[pygame.K_a])
+                    max(keys[pygame.K_RIGHT], keys[pygame.K_d])
+                    - max(keys[pygame.K_LEFT], keys[pygame.K_a])
                 )
                 * BASE_SPEED
                 * time
         )
         dy = (
                 (
-                        max(keys[pygame.K_DOWN], keys[pygame.K_s])
-                        - max(keys[pygame.K_UP], keys[pygame.K_w])
+                    max(keys[pygame.K_DOWN], keys[pygame.K_s])
+                    - max(keys[pygame.K_UP], keys[pygame.K_w])
                 )
                 * BASE_SPEED
                 * time

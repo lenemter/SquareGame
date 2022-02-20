@@ -14,8 +14,8 @@ def load_image(name):
 
 
 HEART_HUD_IMAGE = load_image("images/heart_hud.png")
-HEART_IMAGES = load_image("images/heart.png")
 BAD_HEART_HUD_IMAGE = load_image("images/bad_heart_hud.png")
+HEART_IMAGES = load_image("images/heart.png")
 PISTOL_IMAGE = load_image("images/Pistol.png")
 AK_47_IMAGE = load_image("images/AK-47.png")
 BLASTER_IMAGE = load_image("images/Blaster.png")
