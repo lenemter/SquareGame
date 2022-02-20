@@ -23,6 +23,7 @@ screen = pygame.display.set_mode(
     (common.window_size_x, common.window_size_y), pygame.RESIZABLE
 )
 
+from images import ICON
 import globals
 from button import Button
 from stats import render_stats, update_stats
@@ -180,6 +181,7 @@ class Menu:
 def main():
     logging.basicConfig(level=logging.DEBUG)
     pygame.display.set_caption(WINDOW_NAME)
+    pygame.display.set_icon(ICON)
 
     Menu(screen)
 
