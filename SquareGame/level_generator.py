@@ -6,6 +6,7 @@ from common import ROOM_SIZE
 
 from camera import Camera
 from player import Player
+from enemy import Enemy
 from wall import Wall
 from heart import Heart
 from portal import Portal
@@ -190,13 +191,13 @@ class Room:
     def event_handler(self):
         player = globals.game.player
         if (  # If player in a room and it eneters it from another room
-            self.x * ROOM_SIZE - self.x + 1
-            < player.x
-            < self.x * ROOM_SIZE + ROOM_SIZE - self.x - 1
-            and self.y * ROOM_SIZE - self.y + 1
-            < player.y
-            < self.y * ROOM_SIZE + ROOM_SIZE - self.y - 1
-            and player.last_room != (self.x, self.y)
+                self.x * ROOM_SIZE - self.x + 1
+                < player.x
+                < self.x * ROOM_SIZE + ROOM_SIZE - self.x - 1
+                and self.y * ROOM_SIZE - self.y + 1
+                < player.y
+                < self.y * ROOM_SIZE + ROOM_SIZE - self.y - 1
+                and player.last_room != (self.x, self.y)
         ):
             player.last_room = (self.x, self.y)
             globals.game.rooms += 1
@@ -213,9 +214,9 @@ def create_more_rooms(room):
     def left():
         nonlocal supposed_rooms_count
         if (
-            (room_x - 1, room_y) not in rooms_plan
-            and supposed_rooms_count > 0
-            and rooms_count < max_rooms_count
+                (room_x - 1, room_y) not in rooms_plan
+                and supposed_rooms_count > 0
+                and rooms_count < max_rooms_count
         ):
             new_room = Room(room_x - 1, room_y)
             room.children.append(new_room)
@@ -224,9 +225,9 @@ def create_more_rooms(room):
     def right():
         nonlocal supposed_rooms_count
         if (
-            (room_x + 1, room_y) not in rooms_plan
-            and supposed_rooms_count > 0
-            and rooms_count < max_rooms_count
+                (room_x + 1, room_y) not in rooms_plan
+                and supposed_rooms_count > 0
+                and rooms_count < max_rooms_count
         ):
             new_room = Room(room_x + 1, room_y)
             room.children.append(new_room)
@@ -235,9 +236,9 @@ def create_more_rooms(room):
     def top():
         nonlocal supposed_rooms_count
         if (
-            (room_x, room_y - 1) not in rooms_plan
-            and supposed_rooms_count > 0
-            and rooms_count < max_rooms_count
+                (room_x, room_y - 1) not in rooms_plan
+                and supposed_rooms_count > 0
+                and rooms_count < max_rooms_count
         ):
             new_room = Room(room_x, room_y - 1)
             room.children.append(new_room)
@@ -246,9 +247,9 @@ def create_more_rooms(room):
     def bottom():
         nonlocal supposed_rooms_count
         if (
-            (room_x, room_y + 1) not in rooms_plan
-            and supposed_rooms_count > 0
-            and rooms_count < max_rooms_count
+                (room_x, room_y + 1) not in rooms_plan
+                and supposed_rooms_count > 0
+                and rooms_count < max_rooms_count
         ):
             new_room = Room(room_x, room_y + 1)
             room.children.append(new_room)
