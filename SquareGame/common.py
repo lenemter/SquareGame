@@ -1,5 +1,6 @@
 import pygame
 from time import time_ns
+import math
 
 # Window
 window_size_x, window_size_y = (1280, 720)
@@ -30,6 +31,11 @@ BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 60
 
 STATS_COLOR = pygame.color.Color("#DDDDDD")
 
+# Enemies
+ENEMY_COLOR = pygame.color.Color("#FF0000")
+ENEMY_SPEED = 0.5
+
+TO_DEG = 180 / math.pi
 
 def get_time_ms():
     return time_ns() // 1_000_000
