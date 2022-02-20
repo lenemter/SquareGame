@@ -26,6 +26,7 @@ from stats import update_stats
 
 to_deg = 180 / pi
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__(game_group_2)

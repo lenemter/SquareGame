@@ -79,7 +79,7 @@ def create_more_rooms(room):
         create_more_rooms(room_child)
 
 
-def generate_level_layout(min_rooms=5, max_rooms=12):
+def generate_level_layout(min_rooms=6, max_rooms=10):
     global rooms_count
     global rooms_plan
     global max_rooms_count
@@ -94,18 +94,6 @@ def generate_level_layout(min_rooms=5, max_rooms=12):
     if rooms_count < min_rooms:
         return generate_level_layout(min_rooms)
     return rooms_plan
-
-    # Then rooms will create walls and other objects
-    # Then they'll be drawn
-
-
-# class Corridor:
-#     def __init__(self, start_room, end_room):
-#         self.start_room = start_room
-#         self.end_room = end_room
-
-#     def create_objects(self):
-#         pass
 
 
 class Room:
@@ -125,18 +113,21 @@ class Room:
         name = self.name
 
         room_center = (
-            self.x * ROOM_SIZE + ROOM_SIZE // 2,
-            self.y * ROOM_SIZE + ROOM_SIZE // 2,
+            self.x * ROOM_SIZE + ROOM_SIZE / 2 - self.x,
+            self.y * ROOM_SIZE + ROOM_SIZE / 2 - self.y,
         )
 
         if name == "The begining":
-            level.player = Player(*room_center)
+            # 0.3 - half of the player's size
+            level.player = Player(room_center[0] - 0.3, room_center[1] - 0.3)
+            HUD1(level.player)
         elif name == "Portal":
-            Portal(*room_center)
+            # 0.5 and 1 are half of the portal's width and height
+            Portal(room_center[0] - 0.5, room_center[1] - 1)
         elif name == "Regular room":
             pass
         elif name == "Buff room":
-            Heart(*room_center)
+            Heart(room_center[0] - 0.5, room_center[1] - 0.5)
 
         # Create walls
         room_x = self.x * ROOM_SIZE
@@ -148,8 +139,61 @@ class Room:
             Wall(room_x - self.x, room_y - self.y + y)
             Wall(room_x - self.x + ROOM_SIZE - 1, room_y - self.y + y)
 
+        walls_for_removal = set()
         for child in self.children:
             child.create_objects(level)
+            if child.x == self.x - 1:
+                for i in range((ROOM_SIZE - 2) // 3):
+                    walls_for_removal.add(
+                        (
+                            self.x * ROOM_SIZE - self.x,
+                            (self.y * ROOM_SIZE)
+                            + (ROOM_SIZE - 2) // 3
+                            + i
+                            - self.y
+                            + 1,
+                        )
+                    )
+            elif child.x == self.x + 1:
+                for i in range((ROOM_SIZE - 2) // 3):
+                    walls_for_removal.add(
+                        (
+                            self.x * ROOM_SIZE + ROOM_SIZE - self.x - 1,
+                            (self.y * ROOM_SIZE)
+                            + (ROOM_SIZE - 2) // 3
+                            + i
+                            - self.y
+                            + 1,
+                        )
+                    )
+            elif child.y == self.y - 1:
+                for i in range((ROOM_SIZE - 2) // 3):
+                    walls_for_removal.add(
+                        (
+                            (self.x * ROOM_SIZE)
+                            + (ROOM_SIZE - 2) // 3
+                            + i
+                            - self.x
+                            + 1,
+                            self.y * ROOM_SIZE - self.y,
+                        )
+                    )
+            elif child.y == self.y + 1:
+                for i in range((ROOM_SIZE - 2) // 3):
+                    walls_for_removal.add(
+                        (
+                            (self.x * ROOM_SIZE)
+                            + (ROOM_SIZE - 2) // 3
+                            + i
+                            - self.x
+                            + 1,
+                            self.y * ROOM_SIZE + ROOM_SIZE - self.y - 1,
+                        )
+                    )
+
+        for wall in globals.walls_group:
+            if (wall.x, wall.y) in walls_for_removal:
+                wall.kill()
 
 
 def generate_level():

@@ -7,10 +7,10 @@ window_size_x_2, window_size_y_2 = (window_size_x // 2, window_size_y // 2)
 WINDOW_NAME = "SquareGame"
 
 # Game
-BLOCK_SIZE_X, BLOCK_SIZE_Y = (72, 72)
+BLOCK_SIZE_X, BLOCK_SIZE_Y = (64, 64)
 FPS = 120
 FONT_ANTIALIAS = True
-ROOM_SIZE = 17
+ROOM_SIZE = 14
 
 # Player
 BASE_SPEED = 0.005
