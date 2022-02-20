@@ -56,7 +56,7 @@ class Enemy(pygame.sprite.Sprite):
         self.health_limit = BASE_HEALTH_LIMIT
         self.health = BASE_HEALTH_LIMIT
 
-        self.weapon = weapons[0]
+        self.weapon = random.choice(weapons)
         self.last_shooting_time = get_time_ms()
 
         self.delay = random.randint(0, 1000)

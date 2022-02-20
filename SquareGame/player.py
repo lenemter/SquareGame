@@ -54,6 +54,8 @@ class Player(pygame.sprite.Sprite):
         self.weapon = weapons[0]
         self.last_shooting_time = get_time_ms()
 
+        self.last_hit_time = 0
+
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
         self.last_camera_dy = dy
@@ -106,7 +108,10 @@ class Player(pygame.sprite.Sprite):
         # Hit by enemy
         enemy_hits = pygame.sprite.spritecollide(self, enemy_bullet_group, False)
         for hit in enemy_hits:
-            self.health -= hit.damage
+            if self.last_hit_time + 1000 <= get_time_ms():
+                self.last_hit_time = get_time_ms()
+                self.health -= hit.damage
+            hit.kill()
 
     def handle_movement(self, time):
         keys = pygame.key.get_pressed()
