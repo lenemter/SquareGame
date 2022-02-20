@@ -34,8 +34,7 @@ class Bullet(pygame.sprite.Sprite):
 
     def event_handler(self, time):
         fly_distance = math.sqrt(
-            abs(self.start_x * self.start_x - self.x * self.x)
-            + abs(self.start_y * self.start_y - self.y * self.y)
+            abs(self.start_x - self.x) + abs(self.start_y - self.y)
         )  # Distance between start and end
         if fly_distance > BULLET_FLY_LIMIT or pygame.sprite.spritecollideany(
             self, walls_group
