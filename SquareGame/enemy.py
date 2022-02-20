@@ -12,9 +12,11 @@ from common import (
 )
 from globals import (
     game_group_3,
+    enemy_group,
     enemy_bullet_group,
     walls_group,
     weapon_group,
+    player_bullet_group,
     entropy_step,
 )
 import globals
@@ -26,21 +28,23 @@ from stats import update_stats
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, player):
-        super().__init__(game_group_3)
+    def __init__(self, x, y, player, bullet=Bullet):
+        super().__init__(game_group_3, enemy_group)
 
         # Basic stuff
         self.x = x
         self.y = y
         self.player = player
-        self.w = 0.5
-        self.h = 0.5
+        self.bullet = bullet
+        self.w = 0.6
+        self.h = 0.6
         self.rect = pygame.Rect(
             globals.entropy,
             globals.entropy,
             self.w * BLOCK_SIZE_X,
             self.h * BLOCK_SIZE_Y,
         )
+        self.health = 2
         globals.entropy += entropy_step
 
         # Camera
@@ -54,8 +58,6 @@ class Enemy(pygame.sprite.Sprite):
         self.weapon = weapons[0]
         self.last_shooting_time = get_time_ms()
 
-        self.handle_movement()
-
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
         self.last_camera_dy = dy
@@ -63,9 +65,9 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y = self.y * BLOCK_SIZE_Y + dy
         pygame.draw.rect(surface, ENEMY_COLOR, self.rect, 0)
 
-        self.draw_weapon(surface, dx, dy)
+        self.draw_weapon(surface)
 
-    def draw_weapon(self, surface, dx, dy):
+    def draw_weapon(self, surface):
         enemy_center_x = self.x + self.w / 2
         enemy_center_y = self.y + self.h / 2
 
@@ -95,11 +97,19 @@ class Enemy(pygame.sprite.Sprite):
     def event_handler(self, events, events_types, time):
         # Shooting
         self.handle_shooting()
+        # Movement
+        self.handle_movement(time)
 
-    def handle_movement(self):
-        # keys = pygame.key.get_pressed()
-        dx = (self.x * BASE_SPEED)
-        dy = (self.y * BASE_SPEED)
+        bullet_hits = pygame.sprite.spritecollide(self, player_bullet_group, False)
+        for bullet in bullet_hits:
+            # if self.health >= self.bullet.damage:
+                # self.health -= self.bullet.damage
+            # else:
+                bullet.kill()
+
+    def handle_movement(self, time):
+        dx = (self.x * BASE_SPEED * time)
+        dy = (self.y * BASE_SPEED * time)
 
         if dx != 0:
             self.move_single_axis(dx, 0)
@@ -111,16 +121,16 @@ class Enemy(pygame.sprite.Sprite):
         last_rect_y = self.player.y
 
         self.x += dx
-        self.rect.x = int(self.x * BLOCK_SIZE_X + self.player.x)
+        self.rect.x = float(self.x * BLOCK_SIZE_X + self.last_camera_dx)
         if self.rect.x == last_rect_x and dx != 0:
-            self.x -= self.player.x
+            self.x -= dx
             self.rect.x = last_rect_x
             return None
 
         self.y += dy
-        self.rect.y = int(self.y * BLOCK_SIZE_Y + self.player.y)
+        self.rect.y = float(self.y * BLOCK_SIZE_Y + self.last_camera_dy)
         if self.rect.y == last_rect_y and dy != 0:
-            self.y -= self.player.y
+            self.y -= dy
             self.rect.y = last_rect_y
             return None
 
@@ -128,19 +138,19 @@ class Enemy(pygame.sprite.Sprite):
         for wall in walls_hits:
             if dx > 0:  # Moving right; Hit the left side of the wall
                 self.x = wall.x - self.w
-                self.rect.x = last_rect_x
+                self.rect.x = self.player.x
                 break
             elif dx < 0:  # Moving left; Hit the right side of the wall
                 self.x = wall.x + wall.w
-                self.rect.x = last_rect_x
+                self.rect.x = self.player.x
                 break
             elif dy > 0:  # Moving down; Hit the top side of the wall
                 self.y = wall.y - self.h
-                self.rect.y = last_rect_y
+                self.rect.y = self.player.y
                 break
             elif dy < 0:  # Moving up; Hit the bottom side of the wall
                 self.y = wall.y + wall.h
-                self.rect.y = last_rect_y
+                self.rect.y = self.player.y
                 break
 
     def handle_shooting(self):

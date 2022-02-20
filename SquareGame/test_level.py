@@ -21,7 +21,6 @@ class TestLevel:
         self.hud_1 = None
         self.enemy = None
         self.camera = Camera()
-        self.player_x, self.player_y = 0, 0
         self.load_map()
         update_stats({"games": 1, "rooms": 1, "levels": 1})
 
@@ -52,6 +51,7 @@ class TestLevel:
         for bullet in player_bullet_group:
             bullet.event_handler(time)
         self.player.event_handler(events, events_types, time)
+        self.enemy.event_handler(events, events_types, time)
 
     def draw(self, surface):
         self.camera.update(self.player)
