@@ -3,10 +3,11 @@ import random
 
 import common
 from common import FPS
-from globals import player_bullet_group
+from globals import player_bullet_group, enemy_group, enemy_bullet_group
 
 from camera import Camera
 from player import Player
+from enemy import Enemy
 from wall import Wall
 from heart import Heart
 from weapon import Weapon, weapons
@@ -16,6 +17,8 @@ from stats import update_stats
 class TestLevel:
     def __init__(self):
         self.player = None
+        self.hud_1 = None
+        self.enemy = None
         self.camera = Camera()
         self.load_map()
         update_stats({"games": 1, "rooms": 1, "levels": 1})
@@ -39,10 +42,17 @@ class TestLevel:
                     Weapon(x, y, weapons[1])
                 elif cell == "B":
                     Weapon(x, y, weapons[2])
+                elif cell == "E":
+                    Enemy(x, y, self.player)
 
     def event_handler(self, time):
         for bullet in player_bullet_group:
             bullet.event_handler(time)
+        self.player.event_handler(events, events_types, time)
+        for enemy in enemy_group:
+            enemy.event_handler(events, events_types, time)
+        for enemy_bullet in enemy_bullet_group:
+            enemy_bullet.event_handler(time)
         self.player.event_handler(time)
 
     def draw(self, surface):
