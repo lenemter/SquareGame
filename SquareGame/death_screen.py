@@ -23,7 +23,7 @@ class DeathScreen:
 
     def run(self):
         self.surface.fill(BACKGROUND_COLOR)
-        x_pos = (common.window_size_x - 600) // 2
+        x_pos = (self.surface.get_width() - 600) // 2
         buttons_group = pygame.sprite.Group()
         button = Button(
             group=buttons_group,
@@ -68,7 +68,7 @@ class DeathScreen:
 
             text = title_font.render("Статистика", FONT_ANTIALIAS, STATS_COLOR)
             self.surface.blit(
-                text, ((common.window_size_x - text.get_width()) // 2, 360)
+                text, ((self.surface.get_width() - text.get_width()) // 2, 360)
             )
 
             for i in range(len(stats_keys)):
@@ -96,7 +96,7 @@ class DeathScreen:
                     common.window_size_x_2 = event.w // 2
                     common.window_size_y = event.h
                     common.window_size_y_2 = event.h // 2
-                    x_pos = (common.window_size_x - 600) // 2
+                    x_pos = (self.surface.get_width() - 600) // 2
                     button.x = x_pos
 
             for button in buttons_group:
