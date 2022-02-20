@@ -6,6 +6,7 @@ from common import ROOM_SIZE
 
 from camera import Camera
 from player import Player
+from enemy import Enemy
 from wall import Wall
 from heart import Heart
 from portal import Portal

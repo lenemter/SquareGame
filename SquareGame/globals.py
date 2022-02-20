@@ -1,7 +1,7 @@
 import pygame
 
 game = None
-running = False
+is_running = True
 
 # Sprite groups
 game_group_1 = pygame.sprite.Group()  # Lowest

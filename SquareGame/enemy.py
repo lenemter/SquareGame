@@ -9,9 +9,9 @@ from common import (
     BULLET_SPEED,
     ENEMY_COLOR,
     BASE_HEALTH_LIMIT,
-    get_time_ms,
     ENEMY_SPEED,
     TO_DEG,
+    get_time_ms,
 )
 from globals import (
     game_group_3,
@@ -109,6 +109,7 @@ class Enemy(pygame.sprite.Sprite):
             for bullet in bullet_hits:
                 self.health -= bullet.damage
                 if self.health <= 0:
+                    globals.game.kills += 1
                     self.kill()
                 bullet.kill()
 
