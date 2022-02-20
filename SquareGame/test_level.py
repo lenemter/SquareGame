@@ -3,7 +3,7 @@ import random
 
 import common
 from common import FPS
-from globals import player_bullet_group
+from globals import player_bullet_group, enemy_group, enemy_bullet_group
 
 from camera import Camera
 from player import Player
@@ -45,13 +45,16 @@ class TestLevel:
                 elif cell == "B":
                     Weapon(x, y, weapons[2])
                 elif cell == "E":
-                    self.enemy = Enemy(x, y, self.player)
+                    Enemy(x, y, self.player)
 
     def event_handler(self, events, events_types, time):
         for bullet in player_bullet_group:
             bullet.event_handler(time)
         self.player.event_handler(events, events_types, time)
-        self.enemy.event_handler(events, events_types, time)
+        for enemy in enemy_group:
+            enemy.event_handler(events, events_types, time)
+        for enemy_bullet in enemy_bullet_group:
+            enemy_bullet.event_handler(time)
 
     def draw(self, surface):
         self.camera.update(self.player)

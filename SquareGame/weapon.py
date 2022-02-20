@@ -21,7 +21,7 @@ class WeaponInfo:
 weapons = (
     WeaponInfo(
         "Пистолет",
-        3,
+        2,
         250,
         0.25,
         0.25,

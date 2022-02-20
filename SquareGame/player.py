@@ -17,6 +17,7 @@ from globals import (
     walls_group,
     weapon_group,
     entropy_step,
+    enemy_bullet_group
 )
 import globals
 
@@ -102,6 +103,10 @@ class Player(pygame.sprite.Sprite):
         self.handle_shooting()
         # Weapon pickup
         self.handle_weapon()
+        # Hit by enemy
+        enemy_hits = pygame.sprite.spritecollide(self, enemy_bullet_group, False)
+        for hit in enemy_hits:
+            self.health -= hit.damage
 
     def handle_movement(self, time):
         keys = pygame.key.get_pressed()
