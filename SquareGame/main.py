@@ -27,6 +27,7 @@ import globals
 from button import Button
 from stats import render_stats, update_stats
 from level_generator import generate_level
+from death_screen import DeathScreen
 
 
 class Game:
@@ -83,6 +84,29 @@ class Game:
 
             self.level.draw(surface)
             pygame.display.flip()
+
+    def show_death_screen(self):
+        for obj in globals.game_group_1:
+            obj.kill()
+
+        for obj in globals.game_group_2:
+            obj.kill()
+
+        for obj in globals.game_group_3:
+            obj.kill()
+
+        for obj in globals.gui_group_1:
+            obj.kill()
+
+        for obj in globals.gui_group_2:
+            obj.kill()
+
+        for obj in globals.gui_group_3:
+            obj.kill()
+
+        self.player.kill()
+
+        DeathScreen(self.surface, self)
 
 
 def start(surface):

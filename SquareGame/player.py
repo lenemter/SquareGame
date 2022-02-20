@@ -123,6 +123,9 @@ class Player(pygame.sprite.Sprite):
                 self.last_hit_time = get_time_ms()
                 self.health -= hit.damage
             hit.kill()
+        # Death
+        if self.health <= 0:
+            globals.game.show_death_screen()
 
     def handle_movement(self, time):
         keys = pygame.key.get_pressed()
