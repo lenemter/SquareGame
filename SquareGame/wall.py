@@ -7,6 +7,12 @@ import globals
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y):
+        if (x, y) in globals.created_walls_cords:
+            del self
+            return None
+        else:
+            globals.created_walls_cords.add((x, y))
+
         super().__init__(game_group_1, walls_group)
 
         self.x = x

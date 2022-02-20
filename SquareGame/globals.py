@@ -1,5 +1,7 @@
 import pygame
 
+game = None
+running = False
 
 # Sprite groups
 game_group_1 = pygame.sprite.Group()  # Lowest
@@ -13,9 +15,11 @@ gui_group_3 = pygame.sprite.Group()  # Highest
 gui_group_custom = pygame.sprite.Group()
 
 walls_group = pygame.sprite.Group()
+created_walls_cords = set()
 hearts_group = pygame.sprite.Group()
 weapon_group = pygame.sprite.Group()
 player_bullet_group = pygame.sprite.Group()
+portal_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
 enemy_bullet_group = pygame.sprite.Group()
 

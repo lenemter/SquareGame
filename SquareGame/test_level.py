@@ -10,7 +10,6 @@ from player import Player
 from enemy import Enemy
 from wall import Wall
 from heart import Heart
-from hud import HUD1
 from weapon import Weapon, weapons
 from stats import update_stats
 
@@ -35,7 +34,6 @@ class TestLevel:
                     Wall(x, y)
                 elif cell == "@":
                     self.player = Player(x, y)
-                    self.hud_1 = HUD1(self.player)
                 elif cell == "H":
                     Heart(x, y)
                 elif cell == "P":
@@ -47,7 +45,7 @@ class TestLevel:
                 elif cell == "E":
                     Enemy(x, y, self.player)
 
-    def event_handler(self, events, events_types, time):
+    def event_handler(self, time):
         for bullet in player_bullet_group:
             bullet.event_handler(time)
         self.player.event_handler(events, events_types, time)
@@ -55,6 +53,7 @@ class TestLevel:
             enemy.event_handler(events, events_types, time)
         for enemy_bullet in enemy_bullet_group:
             enemy_bullet.event_handler(time)
+        self.player.event_handler(time)
 
     def draw(self, surface):
         self.camera.update(self.player)
@@ -67,19 +66,15 @@ def launch_level(surface):
     running = True
 
     while running:
-        events = pygame.event.get()
-        events_types = {event.type for event in events}
-
-        if pygame.QUIT in events_types:
-            running = False
-            break
-
-        for event in events:
+        for event in pygame.event.get():
             if event.type == pygame.VIDEORESIZE:
                 common.window_size_x_2 = event.w // 2
                 common.window_size_y_2 = event.h // 2
+            elif event.type == pygame.QUIT:
+                running = False
+                break
 
-        level.event_handler(events, events_types, clock.tick(FPS))
+        level.event_handler(clock.tick(FPS))
 
         level.draw(surface)
         pygame.display.flip()
