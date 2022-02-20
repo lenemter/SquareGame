@@ -1,4 +1,5 @@
 import random
+import pygame
 
 import globals
 from common import ROOM_SIZE
@@ -7,9 +8,9 @@ from camera import Camera
 from player import Player
 from wall import Wall
 from heart import Heart
-from hud import HUD1
 from portal import Portal
 from weapon import Weapon, weapons
+from enemy import Enemy
 
 rooms_count = None
 rooms_plan = None
@@ -55,6 +56,7 @@ class Room:
         self.children = []
         self.x = x
         self.y = y
+        self.enemies_group = pygame.sprite.Group()
 
         rooms_count += 1
         rooms_plan[self.x, self.y] = self
@@ -101,8 +103,16 @@ class Room:
             # 0.5 and 1 are half of the portal's width and height
             Portal(room_center[0] - 0.5, room_center[1] - 1)
         elif name == "Regular room":
-            # TODO: Enemies here
-            pass
+            for _ in range(random.randint(5, 8)):
+                enemy_x = random.uniform(
+                    self.x * ROOM_SIZE - self.x + 1,
+                    self.x * ROOM_SIZE + ROOM_SIZE - self.x - 2,
+                )
+                enemy_y = random.uniform(
+                    self.y * ROOM_SIZE - self.y + 1,
+                    self.y * ROOM_SIZE + ROOM_SIZE - self.y - 2,
+                )
+                self.enemies_group.add(Enemy(enemy_x, enemy_y))
         elif name == "Buff room":
             choice = random.choice(("Heart", "Weapon"))
             if choice == "Heart":
@@ -190,7 +200,8 @@ class Room:
         ):
             player.last_room = (self.x, self.y)
             globals.game.rooms += 1
-            print(f"Player in room: ({self.x}, {self.y})")
+            for enemy in self.enemies_group:
+                enemy.is_active = True
 
 
 def create_more_rooms(room):
@@ -242,7 +253,7 @@ def create_more_rooms(room):
             new_room = Room(room_x, room_y + 1)
             room.children.append(new_room)
             supposed_rooms_count -= 1
-    
+
     functions = [left, right, top, bottom]
     random.shuffle(functions)
     for function in functions:
