@@ -127,20 +127,20 @@ class Player(pygame.sprite.Sprite):
     def handle_movement(self, time):
         keys = pygame.key.get_pressed()
         dx = (
-                (
-                        max(keys[pygame.K_RIGHT], keys[pygame.K_d])
-                        - max(keys[pygame.K_LEFT], keys[pygame.K_a])
-                )
-                * BASE_SPEED
-                * time
+            (
+                max(keys[pygame.K_RIGHT], keys[pygame.K_d])
+                - max(keys[pygame.K_LEFT], keys[pygame.K_a])
+            )
+            * BASE_SPEED
+            * time
         )
         dy = (
-                (
-                        max(keys[pygame.K_DOWN], keys[pygame.K_s])
-                        - max(keys[pygame.K_UP], keys[pygame.K_w])
-                )
-                * BASE_SPEED
-                * time
+            (
+                max(keys[pygame.K_DOWN], keys[pygame.K_s])
+                - max(keys[pygame.K_UP], keys[pygame.K_w])
+            )
+            * BASE_SPEED
+            * time
         )
 
         if dx != 0:
@@ -195,8 +195,8 @@ class Player(pygame.sprite.Sprite):
 
     def handle_shooting(self):
         if (
-                pygame.mouse.get_pressed()[0]
-                and get_time_ms() >= self.last_shooting_time + self.weapon.delay
+            pygame.mouse.get_pressed()[0]
+            and get_time_ms() >= self.last_shooting_time + self.weapon.delay
         ):
             self.last_shooting_time = get_time_ms()
 
@@ -206,14 +206,14 @@ class Player(pygame.sprite.Sprite):
             player_center_y = self.y + (self.h - self.weapon.l) / 2
 
             distance_x = (
-                    (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X
-                    - player_center_x
-                    - self.weapon.w / 2
+                (mouse_x - self.last_camera_dx) / BLOCK_SIZE_X
+                - player_center_x
+                - self.weapon.w / 2
             )
             distance_y = (
-                    (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y
-                    - player_center_y
-                    - self.weapon.l / 2
+                (mouse_y - self.last_camera_dy) / BLOCK_SIZE_Y
+                - player_center_y
+                - self.weapon.l / 2
             )
             angle = math.atan2(distance_y, distance_x)
 
@@ -242,8 +242,8 @@ class Player(pygame.sprite.Sprite):
 
     def handle_portals(self):
         if (
-                pygame.sprite.spritecollideany(self, portal_group)
-                and pygame.mouse.get_pressed()[0]
+            pygame.sprite.spritecollideany(self, portal_group)
+            and pygame.mouse.get_pressed()[0]
         ):
             globals.game.level.remove_all_objects()
             globals.game.launch_level()

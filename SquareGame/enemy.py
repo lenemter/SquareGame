@@ -18,7 +18,6 @@ from globals import (
     enemy_group,
     enemy_bullet_group,
     walls_group,
-    weapon_group,
     player_bullet_group,
     entropy_step,
 )
@@ -26,8 +25,6 @@ import globals
 
 from bullet import Bullet
 from weapon import weapons
-from player import Player
-from stats import update_stats
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -98,7 +95,7 @@ class Enemy(pygame.sprite.Sprite):
             ),
         )
 
-    def event_handler(self, events, events_types, time):
+    def event_handler(self, time):
         # Shooting
         self.handle_shooting()
         # Movement
@@ -113,8 +110,16 @@ class Enemy(pygame.sprite.Sprite):
             bullet.kill()
 
     def handle_movement(self, time):
-        dx = (ENEMY_SPEED if self.player.x > self.x else -ENEMY_SPEED) * BASE_SPEED * time
-        dy = (ENEMY_SPEED if self.player.y > self.y else -ENEMY_SPEED) * BASE_SPEED * time
+        dx = (
+            (ENEMY_SPEED if self.player.x > self.x else -ENEMY_SPEED)
+            * BASE_SPEED
+            * time
+        )
+        dy = (
+            (ENEMY_SPEED if self.player.y > self.y else -ENEMY_SPEED)
+            * BASE_SPEED
+            * time
+        )
 
         if dx != 0:
             self.move_single_axis(dx, 0)
@@ -159,7 +164,10 @@ class Enemy(pygame.sprite.Sprite):
                 break
 
     def handle_shooting(self):
-        if get_time_ms() >= self.last_shooting_time + self.weapon.delay * 3 + self.delay:
+        if (
+            get_time_ms()
+            >= self.last_shooting_time + self.weapon.delay * 3 + self.delay
+        ):
             self.last_shooting_time = get_time_ms()
 
             enemy_center_x = self.x + (self.w - self.weapon.w) / 2

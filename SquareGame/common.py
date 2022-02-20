@@ -37,5 +37,6 @@ ENEMY_SPEED = 0.5
 
 TO_DEG = 180 / math.pi
 
+
 def get_time_ms():
     return time_ns() // 1_000_000

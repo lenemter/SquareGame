@@ -242,7 +242,7 @@ def create_more_rooms(room):
             new_room = Room(room_x, room_y + 1)
             room.children.append(new_room)
             supposed_rooms_count -= 1
-    
+
     functions = [left, right, top, bottom]
     random.shuffle(functions)
     for function in functions:
