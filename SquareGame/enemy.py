@@ -11,6 +11,7 @@ from common import (
     BASE_HEALTH_LIMIT,
     get_time_ms,
     ENEMY_SPEED,
+    TO_DEG,
 )
 from globals import (
     game_group_3,
@@ -77,7 +78,7 @@ class Enemy(pygame.sprite.Sprite):
         distance_x = self.player.x - enemy_center_x
         distance_y = self.player.y - enemy_center_y
         angle = math.atan2(distance_y, distance_x)  # in radians
-        angle = angle * (180 / math.pi)  # to degrees
+        angle = angle * TO_DEG  # to degrees
         image = pygame.transform.rotate(
             pygame.transform.scale(
                 self.weapon.image
