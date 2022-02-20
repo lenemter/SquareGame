@@ -9,7 +9,6 @@ from camera import Camera
 from player import Player
 from wall import Wall
 from heart import Heart
-from hud import HUD1
 from weapon import Weapon, weapons
 from stats import update_stats
 
@@ -32,7 +31,6 @@ class TestLevel:
                     Wall(x, y)
                 elif cell == "@":
                     self.player = Player(x, y)
-                    HUD1(self.player)
                 elif cell == "H":
                     Heart(x, y)
                 elif cell == "P":

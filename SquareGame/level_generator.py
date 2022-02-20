@@ -1,5 +1,4 @@
 import random
-import time
 
 import globals
 from common import ROOM_SIZE

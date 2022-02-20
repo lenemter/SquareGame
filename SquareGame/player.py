@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
         # Health
         self.health_limit = BASE_HEALTH_LIMIT
         self.health = BASE_HEALTH_LIMIT
-
+        
         # Weapon
         self.weapon = weapons[0]
         self.last_shooting_time = get_time_ms()
@@ -78,7 +78,7 @@ class Player(pygame.sprite.Sprite):
 
         player_center_x = self.x + self.w / 2
         player_center_y = self.y + self.h / 2
-
+        
         distance_x = (mouse_x - dx) / BLOCK_SIZE_X - player_center_x
         distance_y = (mouse_y - dy) / BLOCK_SIZE_Y - player_center_y
         angle = atan2(distance_y, distance_x)  # in radians
@@ -238,4 +238,4 @@ class Player(pygame.sprite.Sprite):
             and pygame.mouse.get_pressed()[0]
         ):
             globals.game.level.remove_all_objects()
-            globals.game.launch_level()
+            globals.game.launch_level(

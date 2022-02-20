@@ -7,7 +7,6 @@ import globals
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, x, y):
-
         if (x, y) in globals.created_walls_cords:
             del self
             return None

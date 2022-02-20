@@ -4,7 +4,6 @@ import sys
 
 sys.setrecursionlimit(1_000_000)
 os.chdir(os.path.abspath(os.path.dirname(__file__)))
-os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
 import pygame
 import logging
