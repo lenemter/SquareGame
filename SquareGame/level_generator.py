@@ -105,13 +105,14 @@ class Room:
             Portal(room_center[0] - 0.5, room_center[1] - 1)
         elif name == "Regular room":
             for _ in range(random.randint(5, 8)):
+                # -0.6 - Enemies' size
                 enemy_x = random.uniform(
                     self.x * ROOM_SIZE - self.x + 1,
-                    self.x * ROOM_SIZE + ROOM_SIZE - self.x - 2,
+                    self.x * ROOM_SIZE + ROOM_SIZE - self.x - 1 - 0.6,
                 )
                 enemy_y = random.uniform(
                     self.y * ROOM_SIZE - self.y + 1,
-                    self.y * ROOM_SIZE + ROOM_SIZE - self.y - 2,
+                    self.y * ROOM_SIZE + ROOM_SIZE - self.y - 1 - 0.6,
                 )
                 self.enemies_group.add(Enemy(enemy_x, enemy_y))
         elif name == "Buff room":
