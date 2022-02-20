@@ -42,7 +42,7 @@ class Enemy(pygame.sprite.Sprite):
             self.w * BLOCK_SIZE_X,
             self.h * BLOCK_SIZE_Y,
         )
-        self.health = 2
+        self.health = random.randint(2, 3)
         globals.entropy += entropy_step
 
         # Camera
@@ -56,7 +56,7 @@ class Enemy(pygame.sprite.Sprite):
         self.weapon = random.choice(weapons)
         self.last_shooting_time = get_time_ms()
 
-        self.delay = random.randint(0, 1000)
+        self.delay = random.randint(0, 500)
 
         # Room activity
         self.is_active = False
@@ -169,7 +169,7 @@ class Enemy(pygame.sprite.Sprite):
     def handle_shooting(self):
         if (
             get_time_ms()
-            >= self.last_shooting_time + self.weapon.delay * 3 + self.delay
+            >= self.last_shooting_time + self.weapon.delay * 2.5 + self.delay
         ):
             self.last_shooting_time = get_time_ms()
 
@@ -180,8 +180,8 @@ class Enemy(pygame.sprite.Sprite):
             distance_y = globals.game.player.y - enemy_center_y - self.weapon.l / 2
             angle = math.atan2(distance_y, distance_x)
 
-            speed_x = (math.cos(angle) * BULLET_SPEED) * 0.6
-            speed_y = (math.sin(angle) * BULLET_SPEED) * 0.6
+            speed_x = (math.cos(angle) * BULLET_SPEED) * 0.7
+            speed_y = (math.sin(angle) * BULLET_SPEED) * 0.7
 
             Bullet(
                 enemy_bullet_group,
