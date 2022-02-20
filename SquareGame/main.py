@@ -1,6 +1,8 @@
 # Removes "Hello from the pygame community. https://www.pygame.org/contribute.html"
 import os
+import sys
 
+sys.setrecursionlimit(1_000_000)
 os.chdir(os.path.abspath(os.path.dirname(__file__)))
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
@@ -23,30 +25,71 @@ screen = pygame.display.set_mode(
     (common.window_size_x, common.window_size_y), pygame.RESIZABLE
 )
 
+import globals
 from button import Button
-from stats import render_stats
+from stats import render_stats, update_stats
 from level_generator import generate_level
 
 
-def launch_level(surface):
-    level = generate_level()
-    clock = pygame.time.Clock()
-    running = True
+class Game:
+    def __init__(self):
+        self.current_level = 0
+        self.surface = None
+        self.player = None
+        self.level = None
 
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.VIDEORESIZE:
-                common.window_size_x_2 = event.w // 2
-                common.window_size_y_2 = event.h // 2
-            elif event.type == pygame.QUIT:
-                running = False
-                break
+        # Stats
+        self.deaths = 0
+        self.games = 1
+        self.kills = 0
+        self.upgrades = 0
+        self.weapons = 0
+        self.hearts = 0
+        self.rooms = 0
+        self.levels = 0
 
-        level.event_handler(clock.tick(FPS))
+    def stop(self):
+        update_stats(
+            {
+                "games": self.games,
+                "deaths": self.deaths,
+                "kills": self.kills,
+                "upgrades": self.upgrades,
+                "weapons": self.weapons,
+                "hearts": self.hearts,
+                "rooms": self.rooms,
+                "levels": self.levels,
+            }
+        )
 
-        level.draw(surface)
-        pygame.display.flip()
+    def launch_level(self, surface=None):
+        self.current_level += 1
+        if surface is None:
+            surface = self.surface
+        self.surface = surface
 
+        self.level = generate_level()
+        clock = pygame.time.Clock()
+        globals.running = True
+
+        while globals.running:
+            for event in pygame.event.get():
+                if event.type == pygame.VIDEORESIZE:
+                    common.window_size_x_2 = event.w // 2
+                    common.window_size_y_2 = event.h // 2
+                elif event.type == pygame.QUIT:
+                    globals.running = False
+                    break
+
+            self.level.event_handler(clock.tick(FPS))
+
+            self.level.draw(surface)
+            pygame.display.flip()
+
+
+def start(surface):
+    globals.game = Game()
+    globals.game.launch_level(surface)
     pygame.quit()
 
 
@@ -64,7 +107,7 @@ def main():
         w=BUTTON_SIZE_X,
         h=BUTTON_SIZE_Y,
         text="Играть",
-        callback=launch_level,
+        callback=start,
         args=(screen,),
     )
 
@@ -103,6 +146,7 @@ def main():
             result = button.event_handler(events, events_types)
             if result:
                 running = False
+                globals.game.stop()  # Stopping here because game can be None
                 break
 
     pygame.quit()

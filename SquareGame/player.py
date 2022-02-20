@@ -17,12 +17,14 @@ from globals import (
     walls_group,
     weapon_group,
     entropy_step,
+    portal_group,
 )
 import globals
 
 from bullet import Bullet
 from weapon import weapons
 from stats import update_stats
+from hud import HUD1
 
 to_deg = 180 / pi
 
@@ -55,6 +57,12 @@ class Player(pygame.sprite.Sprite):
         # Weapon
         self.weapon = weapons[0]
         self.last_shooting_time = get_time_ms()
+
+        # Rooms
+        self.last_room = None
+
+        # HUD
+        HUD1()
 
     def draw(self, surface, dx, dy):
         self.last_camera_dx = dx
@@ -105,6 +113,8 @@ class Player(pygame.sprite.Sprite):
         self.handle_shooting()
         # Weapon pickup
         self.handle_weapon()
+        # Portal
+        self.handle_portals()
 
     def handle_movement(self, time):
         keys = pygame.key.get_pressed()
@@ -221,3 +231,11 @@ class Player(pygame.sprite.Sprite):
                 self.weapon = weapon.weapon_info
                 weapon.kill()
                 update_stats({"weapons": 1})
+
+    def handle_portals(self):
+        if (
+            pygame.sprite.spritecollideany(self, portal_group)
+            and pygame.mouse.get_pressed()[0]
+        ):
+            globals.game.level.remove_all_objects()
+            globals.game.launch_level()

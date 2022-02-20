@@ -24,7 +24,7 @@ stats_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 1
 
 
 def update_stats(added_stats):
-    with open("stats.json", "r") as stats_file_reader:
+    with open("stats.json", mode="r", encoding="UTF-8") as stats_file_reader:
         stats = json.load(stats_file_reader)
 
     for key in added_stats:
@@ -49,7 +49,7 @@ def render_stats(surface):
         "Количество взятого оружия: ",
         "Количество взятых сердечек: ",
         "Количество пройденных комнат: ",
-        "Количество пройденных комнат: ",
+        "Количество пройденных уровней: ",
     ]
 
     stats = [str(value) for value in stats.values()]

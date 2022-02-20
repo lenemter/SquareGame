@@ -1,5 +1,7 @@
 import pygame
 
+game = None
+running = False
 
 # Sprite groups
 game_group_1 = pygame.sprite.Group()  # Lowest
@@ -18,8 +20,8 @@ hearts_group = pygame.sprite.Group()
 weapon_group = pygame.sprite.Group()
 player_bullet_group = pygame.sprite.Group()
 portal_group = pygame.sprite.Group()
-# enemy_group = pygame.sprite.Group()
-# enemy_bullet_group = pygame.sprite.Group()
+enemy_group = pygame.sprite.Group()
+enemy_bullet_group = pygame.sprite.Group()
 
 # "Random" sprites placement on start
 entropy = 0
