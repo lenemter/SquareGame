@@ -238,4 +238,4 @@ class Player(pygame.sprite.Sprite):
             and pygame.mouse.get_pressed()[0]
         ):
             globals.game.level.remove_all_objects()
-            globals.game.launch_level(
+            globals.game.launch_level()
