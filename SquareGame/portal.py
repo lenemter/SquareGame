@@ -2,7 +2,7 @@ import pygame
 
 import globals
 from globals import game_group_1, portal_group, entropy_step
-from images import PORTAL
+from images import PORTAL_IMAGE
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y
 
 
@@ -13,11 +13,11 @@ class Portal(pygame.sprite.Sprite):
 
         self.x = x
         self.y = y
-        self.w = 1
-        self.h = 2
+        self.w = 2
+        self.h = 4
 
         self.image = pygame.transform.scale(
-            PORTAL, (self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y)
+            PORTAL_IMAGE, (self.w * BLOCK_SIZE_X, self.h * BLOCK_SIZE_Y)
         )
         self.rect = self.image.get_rect()
         self.rect.x = globals.entropy

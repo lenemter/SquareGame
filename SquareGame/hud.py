@@ -4,7 +4,7 @@ import globals
 import common
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, WHITE, FONT_ANTIALIAS
 from globals import gui_group_1
-from images import HEART_IMAGE, BAD_HEART_IMAGE
+from images import HEART_HUD_IMAGE, BAD_HEART_HUD_IMAGE
 
 
 class HUD1(pygame.sprite.Sprite):
@@ -24,10 +24,10 @@ class HUD1(pygame.sprite.Sprite):
     def draw_health_bar(self, surface):
         player_health_limit = globals.game.player.health_limit
         player_health = globals.game.player.health
-        
+
         for i in range(1, player_health_limit + 1):
             image = pygame.transform.scale(
-                HEART_IMAGE if i <= player_health else BAD_HEART_IMAGE,
+                HEART_HUD_IMAGE if i <= player_health else BAD_HEART_HUD_IMAGE,
                 (1.2 * BLOCK_SIZE_X, 1.2 * BLOCK_SIZE_Y),
             )
             surface.blit(image, ((i * 1.2 - 1) * BLOCK_SIZE_X, 0.2 * BLOCK_SIZE_Y))
@@ -58,4 +58,3 @@ class HUD1(pygame.sprite.Sprite):
                 0.2 * BLOCK_SIZE_Y + text.get_height() // 2,
             ),
         )
- 

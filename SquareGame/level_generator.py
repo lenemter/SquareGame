@@ -198,38 +198,55 @@ def create_more_rooms(room):
     room_y = room.y
 
     supposed_rooms_count = random.randint(0, 3)
-    if (
-        (room_x - 1, room_y) not in rooms_plan
-        and supposed_rooms_count > 0
-        and rooms_count < max_rooms_count
-    ):
-        new_room = Room(room_x - 1, room_y)
-        room.children.append(new_room)
-        supposed_rooms_count -= 1
-    if (
-        (room_x + 1, room_y) not in rooms_plan
-        and supposed_rooms_count > 0
-        and rooms_count < max_rooms_count
-    ):
-        new_room = Room(room_x + 1, room_y)
-        room.children.append(new_room)
-        supposed_rooms_count -= 1
-    if (
-        (room_x, room_y - 1) not in rooms_plan
-        and supposed_rooms_count > 0
-        and rooms_count < max_rooms_count
-    ):
-        new_room = Room(room_x, room_y - 1)
-        room.children.append(new_room)
-        supposed_rooms_count -= 1
-    if (
-        (room_x, room_y + 1) not in rooms_plan
-        and supposed_rooms_count > 0
-        and rooms_count < max_rooms_count
-    ):
-        new_room = Room(room_x, room_y + 1)
-        room.children.append(new_room)
-        supposed_rooms_count -= 1
+
+    def left():
+        nonlocal supposed_rooms_count
+        if (
+            (room_x - 1, room_y) not in rooms_plan
+            and supposed_rooms_count > 0
+            and rooms_count < max_rooms_count
+        ):
+            new_room = Room(room_x - 1, room_y)
+            room.children.append(new_room)
+            supposed_rooms_count -= 1
+
+    def right():
+        nonlocal supposed_rooms_count
+        if (
+            (room_x + 1, room_y) not in rooms_plan
+            and supposed_rooms_count > 0
+            and rooms_count < max_rooms_count
+        ):
+            new_room = Room(room_x + 1, room_y)
+            room.children.append(new_room)
+            supposed_rooms_count -= 1
+
+    def top():
+        nonlocal supposed_rooms_count
+        if (
+            (room_x, room_y - 1) not in rooms_plan
+            and supposed_rooms_count > 0
+            and rooms_count < max_rooms_count
+        ):
+            new_room = Room(room_x, room_y - 1)
+            room.children.append(new_room)
+            supposed_rooms_count -= 1
+
+    def bottom():
+        nonlocal supposed_rooms_count
+        if (
+            (room_x, room_y + 1) not in rooms_plan
+            and supposed_rooms_count > 0
+            and rooms_count < max_rooms_count
+        ):
+            new_room = Room(room_x, room_y + 1)
+            room.children.append(new_room)
+            supposed_rooms_count -= 1
+    
+    functions = [left, right, top, bottom]
+    random.shuffle(functions)
+    for function in functions:
+        function()
 
     for room_child in room.children:
         create_more_rooms(room_child)

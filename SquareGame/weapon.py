@@ -2,7 +2,7 @@ import pygame
 from dataclasses import dataclass
 
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y
-from images import PISTOL, AK_47, BLASTER
+from images import PISTOL_IMAGE, AK_47_IMAGE, BLASTER_IMAGE
 from globals import game_group_1, weapon_group, entropy_step
 import globals
 
@@ -26,7 +26,7 @@ weapons = (
         0.25,
         0.25,
         pygame.color.Color("#FDD344"),
-        PISTOL,
+        PISTOL_IMAGE,
     ),
     WeaponInfo(
         "Автомат",
@@ -35,7 +35,7 @@ weapons = (
         0.2,
         0.2,
         pygame.color.Color("#FDD344"),
-        AK_47,
+        AK_47_IMAGE,
     ),
     WeaponInfo(
         "Бластер",
@@ -44,7 +44,7 @@ weapons = (
         0.2,
         0.2,
         pygame.color.Color("#FDD344"),
-        BLASTER,
+        BLASTER_IMAGE,
     ),
 )
 

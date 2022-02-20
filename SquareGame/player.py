@@ -12,7 +12,7 @@ from common import (
     TO_DEG,
 )
 from globals import (
-    game_group_1,
+    game_group_2,
     hearts_group,
     player_bullet_group,
     walls_group,
@@ -54,6 +54,7 @@ class Player(pygame.sprite.Sprite):
         self.health_limit = BASE_HEALTH_LIMIT
         self.health = BASE_HEALTH_LIMIT
 
+        # Weapon
         self.weapon = weapons[0]
         self.last_shooting_time = get_time_ms()
 
