@@ -12,7 +12,7 @@ from common import (
     TO_DEG,
 )
 from globals import (
-    game_group_1,
+    game_group_2,
     hearts_group,
     player_bullet_group,
     walls_group,

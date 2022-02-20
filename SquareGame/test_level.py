@@ -48,9 +48,9 @@ class TestLevel:
     def event_handler(self, time):
         for bullet in player_bullet_group:
             bullet.event_handler(time)
-        self.player.event_handler(events, events_types, time)
+        self.player.event_handler(time)
         for enemy in enemy_group:
-            enemy.event_handler(events, events_types, time)
+            enemy.event_handler(time)
         for enemy_bullet in enemy_bullet_group:
             enemy_bullet.event_handler(time)
         self.player.event_handler(time)
