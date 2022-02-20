@@ -1,8 +1,6 @@
 # Removes "Hello from the pygame community. https://www.pygame.org/contribute.html"
 import os
-import sys
 
-sys.setrecursionlimit(1_000_000)
 os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
 import pygame

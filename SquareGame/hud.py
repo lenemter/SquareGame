@@ -24,7 +24,7 @@ class HUD1(pygame.sprite.Sprite):
     def draw_health_bar(self, surface):
         player_health_limit = globals.game.player.health_limit
         player_health = globals.game.player.health
-        
+
         for i in range(1, player_health_limit + 1):
             image = pygame.transform.scale(
                 HEART_IMAGE if i <= player_health else BAD_HEART_IMAGE,
@@ -58,4 +58,3 @@ class HUD1(pygame.sprite.Sprite):
                 0.2 * BLOCK_SIZE_Y + text.get_height() // 2,
             ),
         )
- 
