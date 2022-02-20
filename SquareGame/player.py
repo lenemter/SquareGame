@@ -8,8 +8,8 @@ from common import (
     BULLET_SPEED,
     PLAYER_COLOR,
     BASE_HEALTH_LIMIT,
-    get_time_ms,
     TO_DEG,
+    get_time_ms,
 )
 from globals import (
     game_group_2,
@@ -25,7 +25,6 @@ import globals
 
 from bullet import Bullet
 from weapon import weapons
-from stats import update_stats
 from hud import HUD1
 
 
@@ -194,7 +193,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.health += heart.heal_amount
             heart.kill()
-            update_stats({"hearts": 1})
+            globals.game.hearts += 1
 
     def handle_shooting(self):
         if (
@@ -241,12 +240,13 @@ class Player(pygame.sprite.Sprite):
             if weapon.weapon_info != self.weapon:
                 self.weapon = weapon.weapon_info
                 weapon.kill()
-                update_stats({"weapons": 1})
+                globals.game.weapons += 1
 
     def handle_portals(self):
         if (
             pygame.sprite.spritecollideany(self, portal_group)
             and pygame.mouse.get_pressed()[0]
         ):
+            globals.game.levels += 1
             globals.game.level.remove_all_objects()
             globals.game.launch_level()
