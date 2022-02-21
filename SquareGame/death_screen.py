@@ -11,6 +11,7 @@ from common import (
 )
 from button import Button
 
+death_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 44)
 title_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 20)
 stats_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 16)
 
@@ -66,7 +67,7 @@ class DeathScreen:
 
             height = 400
 
-            text = title_font.render("Вы умерли", FONT_ANTIALIAS, STATS_COLOR)
+            text = death_font.render("Вы умерли!", FONT_ANTIALIAS, STATS_COLOR)
             self.surface.blit(
                 text, ((self.surface.get_width() - text.get_width()) // 2, 120)
             )
