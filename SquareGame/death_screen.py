@@ -66,6 +66,12 @@ class DeathScreen:
 
             height = 400
 
+            text = title_font.render("Вы умерли", FONT_ANTIALIAS, STATS_COLOR)
+            self.surface.blit(
+                text, ((self.surface.get_width() - text.get_width()) // 2, 120)
+            )
+            
+            
             text = title_font.render("Статистика игры", FONT_ANTIALIAS, STATS_COLOR)
             self.surface.blit(
                 text, ((self.surface.get_width() - text.get_width()) // 2, 360)
