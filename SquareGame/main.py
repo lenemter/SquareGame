@@ -107,6 +107,7 @@ class Game:
         self.player.kill()
 
         self.is_running = False
+        globals.created_walls_cords.clear()
         DeathScreen(self.surface)
 
 
