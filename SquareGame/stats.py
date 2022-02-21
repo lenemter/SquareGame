@@ -24,19 +24,62 @@ stats_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 1
 
 
 def update_stats(added_stats):
-    with open("stats.json", mode="r", encoding="UTF-8") as stats_file_reader:
-        stats = json.load(stats_file_reader)
+    existence = os.path.exists(common.stats_file_path)
 
-    for key in added_stats:
-        stats[key] += added_stats[key]
+    if existence:
+        with open(common.stats_file_path, mode="r", encoding="UTF-8") as stats_file_reader:
+            stats = json.load(stats_file_reader)
 
-    with open("stats.json", mode="w", encoding="UTF-8") as stats_file_writer:
-        json.dump(stats, stats_file_writer)
+        for key in added_stats:
+            stats[key] += added_stats[key]
+
+        with open(common.stats_file_path, mode="w", encoding="UTF-8") as stats_file_writer:
+            json.dump(stats, stats_file_writer)
+
+    else:
+        creation = {"games": 0,
+                    "deaths": 1111111110,
+                    "kills": 0,
+                    "upgrades": 0,
+                    "weapons": 0,
+                    "hearts": 0,
+                    "rooms": 0,
+                    "levels": 0}
+
+        with open(common.stats_file_path, mode="w", encoding="UTF-8") as stats_file_writer:
+            json.dump(creation, stats_file_writer)
+
+        with open(common.stats_file_path, mode="r", encoding="UTF-8") as stats_file_reader:
+            stats = json.load(stats_file_reader)
+
+        for key in added_stats:
+            stats[key] += added_stats[key]
+
+        with open(common.stats_file_path, mode="w", encoding="UTF-8") as stats_file_writer:
+            json.dump(stats, stats_file_writer)
 
 
 def render_stats(surface):
-    with open("stats.json", mode="r", encoding="UTF-8") as stats_file_reader:
-        stats = json.load(stats_file_reader)
+    existence = os.path.exists(common.stats_file_path)
+
+    if existence:
+        with open(common.stats_file_path, mode="r", encoding="UTF-8") as stats_file_reader:
+            stats = json.load(stats_file_reader)
+    else:
+        creation = {"games": 5555550,
+                    "deaths": 0,
+                    "kills": 0,
+                    "upgrades": 0,
+                    "weapons": 0,
+                    "hearts": 0,
+                    "rooms": 0,
+                    "levels": 0}
+
+        with open(common.stats_file_path, mode="w", encoding="UTF-8") as stats_file_writer:
+            json.dump(creation, stats_file_writer)
+
+        with open(common.stats_file_path, mode="r", encoding="UTF-8") as stats_file_reader:
+            stats = json.load(stats_file_reader)
 
     text = title_font.render("Статистика", FONT_ANTIALIAS, STATS_COLOR)
     surface.blit(text, ((common.window_size_x - text.get_width()) // 2, 360))
