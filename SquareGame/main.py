@@ -117,7 +117,7 @@ class Menu:
         self.run()
 
     def run(self):
-        x_pos = (common.window_size_x - BUTTON_SIZE_X) // 2
+        x_pos = (self.surface.get_width() - BUTTON_SIZE_X) // 2
 
         buttons_group = pygame.sprite.Group()
         play_button = Button(
@@ -159,11 +159,7 @@ class Menu:
 
             for event in events:
                 if event.type == pygame.VIDEORESIZE:
-                    common.window_size_x = event.w
-                    common.window_size_x_2 = event.w // 2
-                    common.window_size_y = event.h
-                    common.window_size_y_2 = event.h // 2
-                    x_pos = (event.w - BUTTON_SIZE_X) // 2
+                    x_pos = (self.surface.get_width() - BUTTON_SIZE_X) // 2
                     play_button.x = x_pos
 
             for button in buttons_group:
