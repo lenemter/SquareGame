@@ -1,7 +1,6 @@
 import pygame
 
 import globals
-import common
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y, WHITE, FONT_ANTIALIAS
 from globals import gui_group_1
 from images import HEART_HUD_IMAGE, BAD_HEART_HUD_IMAGE
@@ -54,7 +53,7 @@ class HUD1(pygame.sprite.Sprite):
         surface.blit(
             text,
             (
-                common.window_size_x_2 - text.get_width() // 2,
-                0.2 * BLOCK_SIZE_Y + text.get_height() // 2,
+                (globals.game.surface.get_width() - text.get_width()) // 2,
+                int(BLOCK_SIZE_Y * 0.2 + text.get_height() / 2),
             ),
         )

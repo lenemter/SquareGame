@@ -1,4 +1,4 @@
-import common
+import globals
 from common import (
     BLOCK_SIZE_X,
     BLOCK_SIZE_Y,
@@ -9,8 +9,6 @@ from globals import (
     game_group_2,
     game_group_3,
     gui_group_1,
-    gui_group_2,
-    gui_group_3,
 )
 
 
@@ -31,11 +29,11 @@ class Camera:
 
         for obj in gui_group_1:
             obj.draw(surface)
-        for obj in gui_group_2:
-            obj.draw(surface)
-        for obj in gui_group_3:
-            obj.draw(surface)
 
     def update(self, target):
-        self.x = target.rect.w // 2 - target.x * BLOCK_SIZE_X + common.window_size_x_2
-        self.y = target.rect.h // 2 - target.y * BLOCK_SIZE_Y + common.window_size_y_2
+        self.x = int(
+            target.rect.w / 2 - target.x * BLOCK_SIZE_X + globals.game.surface.get_width() / 2
+        )
+        self.y = int(
+            target.rect.h / 2 - target.y * BLOCK_SIZE_Y + globals.game.surface.get_height() / 2
+        )

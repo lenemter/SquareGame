@@ -3,9 +3,7 @@ from time import time_ns
 import math
 
 # Window
-window_size_x, window_size_y = (1280, 720)
-window_size_x_2, window_size_y_2 = (window_size_x // 2, window_size_y // 2)
-WINDOW_NAME = "SquareGame"
+BASE_WINDOW_SIZE = (1280, 720)
 
 # Game
 BLOCK_SIZE_X, BLOCK_SIZE_Y = (74, 74)
@@ -29,7 +27,7 @@ BUTTON_COLOR = pygame.color.Color("#33505D")
 BUTTON_HOVER_COLOR = pygame.color.Color("#51827B")
 BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 60
 
-STATS_COLOR = pygame.color.Color("#DDDDDD")
+STATS_COLOR = pygame.color.Color("#EEEEEE")
 
 # Enemies
 ENEMY_COLOR = pygame.color.Color("#FF0000")
@@ -37,7 +35,7 @@ ENEMY_SPEED = 0.5
 
 TO_DEG = 180 / math.pi
 
-stats_file_path = "stats.json"
+STATS_FILE_PATH = "stats.json"
 
 
 def get_time_ms():
