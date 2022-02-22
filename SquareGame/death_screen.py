@@ -22,24 +22,22 @@ class DeathScreen:
     def run(self):
         stats_keys = [
             "Количество сыгранных игр: ",
-            "Количество смертей: ",
             "Количество убитых врагов: ",
-            "Количество взятых прокачек: ",
-            "Количество взятого оружия: ",
-            "Количество взятых сердечек: ",
             "Количество пройденных комнат: ",
             "Количество пройденных уровней: ",
+            "Максимальный уровень: ",
+            "Количество взятого оружия: ",
+            "Количество взятых сердечек: ",
         ]
 
         stats = [
             str(globals.game.games),
-            str(globals.game.deaths),
             str(globals.game.kills),
-            str(globals.game.upgrades),
-            str(globals.game.weapons),
-            str(globals.game.hearts),
             str(globals.game.rooms),
             str(globals.game.levels),
+            str(globals.game.max_level),
+            str(globals.game.weapons),
+            str(globals.game.hearts),
         ]
 
         # Fonts
