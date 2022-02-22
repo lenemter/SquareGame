@@ -2,14 +2,14 @@ import pygame
 
 import globals
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y
-from globals import game_group_1, entropy_step
+from globals import game_group_1, entropy_step, floor_pieces
 
 
 class FloorPiece(pygame.sprite.Sprite):
     color = pygame.color.Color("#253841")
 
     def __init__(self, x, y, w=1, h=1):
-        super().__init__(game_group_1)
+        super().__init__(game_group_1, floor_pieces)
 
         self.x = x
         self.y = y

@@ -10,51 +10,39 @@ from common import STATS_COLOR, FONT_ANTIALIAS, STATS_FILE_PATH
 
 """
 games = Количество сыгранных игр
-deaths = Количество смертей
 kills = Количество убитых врагов
-upgrades = Количество взятых прокачек
-weapons = Количество взятого оружия
-hearts = Количество взятых сердечек
 rooms = Количество пройденных комнат
 levels = Количество пройденных уровней
+max_level = Максимальный уровень
+weapons = Количество взятого оружия
+hearts = Количество взятых сердечек
 """
 
 title_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 20)
 stats_font = pygame.font.Font("fonts/Press_Start_2P/PressStart2P-Regular.ttf", 16)
 
+default_stats = {
+    "games": 0,
+    "kills": 0,
+    "rooms": 0,
+    "levels": 0,
+    "max_level": 0,
+    "weapons": 0,
+    "hearts": 0,
+}
 
 def update_stats(added_stats):
     existence = os.path.exists(STATS_FILE_PATH)
 
     if not existence:
-        defult_stats = {
-            "games": 0,
-            "deaths": 0,
-            "kills": 0,
-            "upgrades": 0,
-            "weapons": 0,
-            "hearts": 0,
-            "rooms": 0,
-            "levels": 0,
-        }
-
         with open(STATS_FILE_PATH, mode="w", encoding="UTF-8") as stats_file_writer:
-            json.dump(defult_stats, stats_file_writer)
+            json.dump(default_stats.copy(), stats_file_writer)
 
     with open(STATS_FILE_PATH, mode="r", encoding="UTF-8") as stats_file_reader:
         try:
             stats = json.load(stats_file_reader)
         except json.JSONDecodeError:
-            stats = {
-                "games": 0,
-                "deaths": 0,
-                "kills": 0,
-                "upgrades": 0,
-                "weapons": 0,
-                "hearts": 0,
-                "rooms": 0,
-                "levels": 0,
-            }
+            stats = default_stats.copy()
         logging.error(f"Unable to load stats from {STATS_FILE_PATH}")
 
     for key in added_stats:
@@ -68,33 +56,14 @@ def render_stats(surface):
     existence = os.path.exists(STATS_FILE_PATH)
 
     if not existence:
-        default_stats = {
-            "games": 0,
-            "deaths": 0,
-            "kills": 0,
-            "upgrades": 0,
-            "weapons": 0,
-            "hearts": 0,
-            "rooms": 0,
-            "levels": 0,
-        }
         with open(STATS_FILE_PATH, mode="w", encoding="UTF-8") as stats_file_writer:
-            json.dump(default_stats, stats_file_writer)
+            json.dump(default_stats.copy(), stats_file_writer)
 
     with open(STATS_FILE_PATH, mode="r", encoding="UTF-8") as stats_file_reader:
         try:
             stats = json.load(stats_file_reader)
         except json.JSONDecodeError:
-            stats = {
-                "games": 0,
-                "deaths": 0,
-                "kills": 0,
-                "upgrades": 0,
-                "weapons": 0,
-                "hearts": 0,
-                "rooms": 0,
-                "levels": 0,
-            }
+            stats = default_stats.copy()
             logging.error(f"Unable to load stats from {STATS_FILE_PATH}")
 
     text = title_font.render("Статистика:", FONT_ANTIALIAS, STATS_COLOR)
@@ -102,13 +71,12 @@ def render_stats(surface):
 
     stats_keys = [
         "Количество сыгранных игр: ",
-        "Количество смертей: ",
         "Количество убитых врагов: ",
-        "Количество взятых прокачек: ",
-        "Количество взятого оружия: ",
-        "Количество взятых сердечек: ",
         "Количество пройденных комнат: ",
         "Количество пройденных уровней: ",
+        "Максимальный уровень: ",
+        "Количество взятого оружия: ",
+        "Количество взятых сердечек: ",
     ]
 
     stats = [str(value) for value in stats.values()]

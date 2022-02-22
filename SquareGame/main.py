@@ -38,31 +38,31 @@ class Game:
         self.level = None
 
         # Stats
-        self.deaths = 1
         self.games = 1
         self.kills = 0
-        self.upgrades = 0
-        self.weapons = 0
-        self.hearts = 0
         self.rooms = 0
         self.levels = 0
+        self.max_level = 0
+        self.weapons = 0
+        self.hearts = 0
 
     def end(self):
         update_stats(
             {
                 "games": self.games,
-                "deaths": self.deaths,
                 "kills": self.kills,
-                "upgrades": self.upgrades,
-                "weapons": self.weapons,
-                "hearts": self.hearts,
                 "rooms": self.rooms,
                 "levels": self.levels,
+                "max_level": self.max_level,
+                "weapons": self.weapons,
+                "hearts": self.hearts,
             }
         )
 
     def launch_level(self):
         self.current_level += 1
+        if self.current_level > self.max_level:
+            self.max_level = self.current_level
 
         self.level = generate_level()
         clock = pygame.time.Clock()
