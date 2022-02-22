@@ -29,10 +29,6 @@ BUTTON_SIZE_X, BUTTON_SIZE_Y = 400, 60
 
 STATS_COLOR = pygame.color.Color("#EEEEEE")
 
-# Enemies
-ENEMY_COLOR = pygame.color.Color("#FF0000")
-ENEMY_SPEED = 0.5
-
 TO_DEG = 180 / math.pi
 
 STATS_FILE_PATH = "stats.json"

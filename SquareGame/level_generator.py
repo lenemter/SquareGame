@@ -214,7 +214,7 @@ class Room:
             player.last_room = (self.x, self.y)
             globals.game.rooms += 1
             for enemy in self.enemies_group:
-                enemy.is_active = True
+                enemy.activate()
 
 
 def create_more_rooms(room):
