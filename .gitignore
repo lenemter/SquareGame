@@ -1,7 +1,7 @@
 .idea/
 .vscode/
 
-SquareGame/stats.json
+.SquareGame/stats.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
