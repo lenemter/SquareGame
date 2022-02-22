@@ -151,3 +151,4 @@ class DeathScreen:
 
     def close(self):
         self.is_running = False
+        globals.game.closed_death_screen = True

@@ -33,6 +33,7 @@ class Game:
         self.current_level = 0
         self.surface = surface
         self.is_running = False
+        self.closed_death_screen = False
         self.player = None
         self.level = None
 
@@ -81,7 +82,7 @@ class Game:
 
     def show_death_screen(self):
         globals.created_walls_cords.clear()
-        
+
         for obj in globals.game_group_1:
             obj.kill()
 
@@ -100,7 +101,8 @@ class Game:
         self.player.kill()
 
         self.is_running = False
-        DeathScreen(self.surface)
+        if not self.closed_death_screen:
+            DeathScreen(self.surface)
 
 
 class Menu:
