@@ -12,7 +12,7 @@ from common import (
     get_time_ms,
 )
 from globals import (
-    game_group_2,
+    game_group_3,
     hearts_group,
     player_bullet_group,
     walls_group,
@@ -30,7 +30,7 @@ from hud import HUD1
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        super().__init__(game_group_2)
+        super().__init__(game_group_3)
 
         # Basic stuff
         self.x = x
@@ -144,6 +144,11 @@ class Player(pygame.sprite.Sprite):
             * BASE_SPEED
             * time
         )
+
+        # Fix player's speed when moving diagonally
+        if dx != 0 and dy != 0:
+            dx /= 1.1
+            dy /= 1.1
 
         if dx != 0:
             self.move_single_axis(dx, 0)

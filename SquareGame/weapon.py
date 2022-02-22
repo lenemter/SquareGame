@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y
 from images import PISTOL_IMAGE, AK_47_IMAGE, BLASTER_IMAGE
-from globals import game_group_1, weapon_group, entropy_step
+from globals import game_group_2, weapon_group, entropy_step
 import globals
 
 
@@ -51,7 +51,7 @@ weapons = (
 
 class Weapon(pygame.sprite.Sprite):
     def __init__(self, x, y, weapon_info):
-        super().__init__(game_group_1, weapon_group)
+        super().__init__(game_group_2, weapon_group)
 
         self.x = x
         self.y = y

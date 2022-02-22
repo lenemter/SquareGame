@@ -5,13 +5,13 @@ import globals
 from common import ROOM_SIZE
 
 from camera import Camera
-from player import Player
 from enemy import Enemy
-from wall import Wall
+from floor_piece import FloorPiece
 from heart import Heart
+from player import Player
 from portal import Portal
+from wall import Wall
 from weapon import Weapon, weapons
-from enemy import Enemy
 
 rooms_count = None
 rooms_plan = None
@@ -67,16 +67,19 @@ class Room:
             obj.kill()
         globals.created_walls_cords.clear()
 
+        for obj in globals.floor_pieces:
+            obj.kill()
+
         for obj in globals.hearts_group:
             obj.kill()
 
         for obj in globals.weapon_group:
             obj.kill()
 
-        for obj in globals.player_bullet_group:
+        for obj in globals.portal_group:
             obj.kill()
 
-        for obj in globals.portal_group:
+        for obj in globals.player_bullet_group:
             obj.kill()
 
         for obj in globals.enemy_group:
@@ -91,6 +94,14 @@ class Room:
         room_center = (
             self.x * ROOM_SIZE + ROOM_SIZE / 2 - self.x,
             self.y * ROOM_SIZE + ROOM_SIZE / 2 - self.y,
+        )
+
+        # Create floor
+        FloorPiece(
+            self.x * ROOM_SIZE - self.x,
+            self.y * ROOM_SIZE - self.y,
+            ROOM_SIZE,
+            ROOM_SIZE,
         )
 
         if name == "The beginning":

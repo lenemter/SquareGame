@@ -14,7 +14,7 @@ from common import (
     get_time_ms,
 )
 from globals import (
-    game_group_3,
+    game_group_4,
     enemy_group,
     enemy_bullet_group,
     walls_group,
@@ -29,7 +29,7 @@ from weapon import weapons
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        super().__init__(game_group_3, enemy_group)
+        super().__init__(game_group_4, enemy_group)
 
         # Basic stuff
         self.x = x
@@ -57,6 +57,7 @@ class Enemy(pygame.sprite.Sprite):
         self.last_shooting_time = get_time_ms()
 
         self.delay = random.randint(0, 1000)
+        self.angle = random.uniform(-180, 180)
 
         # Room activity
         self.is_active = False
@@ -71,21 +72,14 @@ class Enemy(pygame.sprite.Sprite):
         self.draw_weapon(surface)
 
     def draw_weapon(self, surface):
-        enemy_center_x = self.x + self.w / 2
-        enemy_center_y = self.y + self.h / 2
-
-        distance_x = globals.game.player.x - enemy_center_x
-        distance_y = globals.game.player.y - enemy_center_y
-        angle = math.atan2(distance_y, distance_x)  # in radians
-        angle = angle * TO_DEG  # to degrees
         image = pygame.transform.rotate(
             pygame.transform.scale(
                 self.weapon.image
-                if abs(angle) < 90
+                if abs(self.angle) < 90
                 else pygame.transform.flip(self.weapon.image, False, True),
                 (self.w * 1.5 * BLOCK_SIZE_X, self.h * 1.5 * BLOCK_SIZE_Y),
             ),
-            -angle,
+            -self.angle,
         )
         surface.blit(
             image,
@@ -103,14 +97,19 @@ class Enemy(pygame.sprite.Sprite):
             self.handle_shooting()
             # Movement
             self.handle_movement(time)
+            # Weapon
+            self.handle_weapon_rotation()
 
             bullet_hits = pygame.sprite.spritecollide(self, player_bullet_group, False)
-
             for bullet in bullet_hits:
                 self.health -= bullet.damage
                 if self.health <= 0:
                     globals.game.kills += 1
                     self.kill()
+                bullet.kill()
+        else:
+            bullet_hits = pygame.sprite.spritecollide(self, player_bullet_group, False)
+            for bullet in bullet_hits:
                 bullet.kill()
 
     def handle_movement(self, time):
@@ -195,3 +194,12 @@ class Enemy(pygame.sprite.Sprite):
                 self.weapon.damage,
                 self.weapon.color,
             )
+
+    def handle_weapon_rotation(self):
+        enemy_center_x = self.x + self.w / 2
+        enemy_center_y = self.y + self.h / 2
+
+        distance_x = globals.game.player.x - enemy_center_x
+        distance_y = globals.game.player.y - enemy_center_y
+        angle = math.atan2(distance_y, distance_x)  # in radians
+        self.angle = angle * TO_DEG  # to degrees

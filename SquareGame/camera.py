@@ -8,6 +8,7 @@ from globals import (
     game_group_1,
     game_group_2,
     game_group_3,
+    game_group_4,
     gui_group_1,
 )
 
@@ -19,12 +20,14 @@ class Camera:
 
     def draw(self, surface):
         surface.fill(BACKGROUND_COLOR)
-
+        
         for obj in game_group_1:
             obj.draw(surface, self.x, self.y)
         for obj in game_group_2:
             obj.draw(surface, self.x, self.y)
         for obj in game_group_3:
+            obj.draw(surface, self.x, self.y)
+        for obj in game_group_4:
             obj.draw(surface, self.x, self.y)
 
         for obj in gui_group_1:
