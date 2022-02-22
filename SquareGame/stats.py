@@ -95,10 +95,10 @@ def render_stats(surface):
                 "rooms": 0,
                 "levels": 0,
             }
-        logging.error(f"Unable to load stats from {STATS_FILE_PATH}")
+            logging.error(f"Unable to load stats from {STATS_FILE_PATH}")
 
-    text = title_font.render("Статистика", FONT_ANTIALIAS, STATS_COLOR)
-    surface.blit(text, ((surface.get_width() - text.get_width()) // 2, 360))
+    text = title_font.render("Статистика:", FONT_ANTIALIAS, STATS_COLOR)
+    surface.blit(text, ((surface.get_width() - text.get_width()) // 2, 400))
 
     stats_keys = [
         "Количество сыгранных игр: ",
@@ -113,7 +113,7 @@ def render_stats(surface):
 
     stats = [str(value) for value in stats.values()]
 
-    height = 400
+    height = 440
 
     for i in range(len(stats_keys)):
         stat = stats_font.render(stats_keys[i] + stats[i], FONT_ANTIALIAS, STATS_COLOR)

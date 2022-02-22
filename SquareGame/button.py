@@ -1,3 +1,4 @@
+import logging
 import pygame
 
 from common import (
@@ -79,7 +80,6 @@ class Button(pygame.sprite.Sprite):
 
         if pygame.MOUSEBUTTONUP in events_types:
             if self.callback is None:
-                print(f'Кнопка "{self.text}" нажата')
+                logging.debug(f'Button "{self.text}" was pressed')
             else:
                 self.callback(*self.args, **self.kwargs)
-                return True

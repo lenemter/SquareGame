@@ -72,18 +72,18 @@ class DeathScreen:
         you_died_text = death_font.render("Вы умерли!", FONT_ANTIALIAS, STATS_COLOR)
         self.surface.blit(
             you_died_text,
-            ((self.surface.get_width() - you_died_text.get_width()) // 2, 120),
+            ((self.surface.get_width() - you_died_text.get_width()) // 2, 80),
         )
 
         stats_title_text = title_font.render(
-            "Статистика игры", FONT_ANTIALIAS, STATS_COLOR
+            "Статистика игры:", FONT_ANTIALIAS, STATS_COLOR
         )
         self.surface.blit(
             stats_title_text,
-            ((self.surface.get_width() - stats_title_text.get_width()) // 2, 360),
+            ((self.surface.get_width() - stats_title_text.get_width()) // 2, 340),
         )
 
-        height = 400
+        height = 380
         for i in range(len(stats_keys)):
             stat = stats_font.render(
                 stats_keys[i] + stats[i], FONT_ANTIALIAS, STATS_COLOR

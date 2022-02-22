@@ -1,14 +1,14 @@
 import pygame
 
 import globals
-from globals import game_group_1, portal_group, entropy_step
+from globals import game_group_2, portal_group, entropy_step
 from images import PORTAL_IMAGE
 from common import BLOCK_SIZE_X, BLOCK_SIZE_Y
 
 
 class Portal(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        super().__init__(game_group_1, portal_group)
+        super().__init__(game_group_2, portal_group)
         global entropy_step
 
         self.x = x

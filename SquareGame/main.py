@@ -80,6 +80,8 @@ class Game:
             pygame.display.flip()
 
     def show_death_screen(self):
+        globals.created_walls_cords.clear()
+        
         for obj in globals.game_group_1:
             obj.kill()
 
@@ -89,19 +91,15 @@ class Game:
         for obj in globals.game_group_3:
             obj.kill()
 
+        for obj in globals.game_group_4:
+            obj.kill()
+
         for obj in globals.gui_group_1:
-            obj.kill()
-
-        for obj in globals.gui_group_2:
-            obj.kill()
-
-        for obj in globals.gui_group_3:
             obj.kill()
 
         self.player.kill()
 
         self.is_running = False
-        globals.created_walls_cords.clear()
         DeathScreen(self.surface)
 
 
@@ -116,16 +114,29 @@ class Menu:
 
         self.run()
 
+    def stop(self):
+        self.is_running = False
+        globals.is_running = False
+
     def run(self):
         buttons_group = pygame.sprite.Group()
         Button(
             group=buttons_group,
             x=(self.surface.get_width() - BUTTON_SIZE_X) // 2,
-            y=250,
+            y=200,
             w=BUTTON_SIZE_X,
             h=BUTTON_SIZE_Y,
             text="Играть",
             callback=self.start_game,
+        )
+        Button(
+            group=buttons_group,
+            x=(self.surface.get_width() - BUTTON_SIZE_X) // 2,
+            y=300,
+            w=BUTTON_SIZE_X,
+            h=BUTTON_SIZE_Y,
+            text="Выйти",
+            callback=self.stop,
         )
 
         clock = pygame.time.Clock()
@@ -134,7 +145,7 @@ class Menu:
         self.surface.fill(BACKGROUND_COLOR)
         text = self.title_font.render("SquareGame", FONT_ANTIALIAS, STATS_COLOR)
         self.surface.blit(
-            text, ((self.surface.get_width() - text.get_width()) // 2, 120)
+            text, ((self.surface.get_width() - text.get_width()) // 2, 80)
         )
 
         render_stats(self.surface)
@@ -161,7 +172,7 @@ class Menu:
                         button.draw(self.surface)
 
                     self.surface.blit(
-                        text, ((self.surface.get_width() - text.get_width()) // 2, 120)
+                        text, ((self.surface.get_width() - text.get_width()) // 2, 80)
                     )
                     render_stats(self.surface)
 
