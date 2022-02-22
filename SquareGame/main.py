@@ -20,7 +20,7 @@ from common import (
 pygame.init()
 screen = pygame.display.set_mode(BASE_WINDOW_SIZE, pygame.RESIZABLE)
 
-from images import ICON
+from images import ICON, ICON32
 import globals
 from button import Button
 from stats import render_stats, update_stats
@@ -206,7 +206,12 @@ class Menu:
 def main():
     logging.basicConfig(level=logging.DEBUG)
     pygame.display.set_caption("SquareGame")
-    pygame.display.set_icon(ICON)
+
+    # Checking the OS because Windows only allows 32x32 icons
+    if os.name == "nt":
+        pygame.display.set_icon(ICON32)
+    else:
+        pygame.display.set_icon(ICON)
 
     Menu(screen)
 
