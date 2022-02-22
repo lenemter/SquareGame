@@ -7,21 +7,18 @@ os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 import pygame
 import logging
 
-import common
 from common import (
-    WINDOW_NAME,
+    BASE_WINDOW_SIZE,
     FPS,
     FONT_ANTIALIAS,
     BACKGROUND_COLOR,
+    STATS_COLOR,
     BUTTON_SIZE_X,
     BUTTON_SIZE_Y,
-    STATS_COLOR,
 )
 
 pygame.init()
-screen = pygame.display.set_mode(
-    (common.window_size_x, common.window_size_y), pygame.RESIZABLE
-)
+screen = pygame.display.set_mode(BASE_WINDOW_SIZE, pygame.RESIZABLE)
 
 from images import ICON
 import globals
@@ -49,7 +46,7 @@ class Game:
         self.rooms = 0
         self.levels = 0
 
-    def stop(self):
+    def end(self):
         update_stats(
             {
                 "games": self.games,
@@ -72,10 +69,7 @@ class Game:
 
         while self.is_running and globals.is_running:
             for event in pygame.event.get():
-                if event.type == pygame.VIDEORESIZE:
-                    common.window_size_x_2 = event.w // 2
-                    common.window_size_y_2 = event.h // 2
-                elif event.type == pygame.QUIT:
+                if event.type == pygame.QUIT:
                     self.is_running = False
                     globals.is_running = False
                     break
@@ -115,15 +109,18 @@ class Menu:
     def __init__(self, surface):
         self.surface = surface
         self.is_running = False
+
+        self.title_font = pygame.font.Font(
+            "fonts/Press_Start_2P/PressStart2P-Regular.ttf", 44
+        )
+
         self.run()
 
     def run(self):
-        x_pos = (self.surface.get_width() - BUTTON_SIZE_X) // 2
-
         buttons_group = pygame.sprite.Group()
-        play_button = Button(
+        Button(
             group=buttons_group,
-            x=x_pos,
+            x=(self.surface.get_width() - BUTTON_SIZE_X) // 2,
             y=250,
             w=BUTTON_SIZE_X,
             h=BUTTON_SIZE_Y,
@@ -131,25 +128,21 @@ class Menu:
             callback=self.start_game,
         )
 
-        title_font = pygame.font.Font(
-            "fonts/Press_Start_2P/PressStart2P-Regular.ttf", 44
-        )
-
         clock = pygame.time.Clock()
         self.is_running = True
 
+        self.surface.fill(BACKGROUND_COLOR)
+        text = self.title_font.render("SquareGame", FONT_ANTIALIAS, STATS_COLOR)
+        self.surface.blit(
+            text, ((self.surface.get_width() - text.get_width()) // 2, 120)
+        )
+
+        render_stats(self.surface)
+
         while self.is_running and globals.is_running:
-            self.surface.fill(BACKGROUND_COLOR)
-
-            text = title_font.render(WINDOW_NAME, FONT_ANTIALIAS, STATS_COLOR)
-            self.surface.blit(
-                text, ((common.window_size_x - text.get_width()) // 2, 120)
-            )
-
-            play_button.draw(self.surface)
-            render_stats(self.surface)
-            pygame.display.flip()
-            clock.tick(FPS)
+            for button in buttons_group:
+                button.x = (self.surface.get_width() - button.w) // 2
+                button.draw(self.surface)
 
             events = pygame.event.get()
             events_types = {event.type for event in events}
@@ -157,14 +150,26 @@ class Menu:
             if pygame.QUIT in events_types:
                 self.is_running = False
                 globals.is_running = False
+                break
 
             for event in events:
                 if event.type == pygame.VIDEORESIZE:
-                    x_pos = (self.surface.get_width() - BUTTON_SIZE_X) // 2
-                    play_button.x = x_pos
+                    self.surface.fill(BACKGROUND_COLOR)
+
+                    for button in buttons_group:
+                        button.x = (self.surface.get_width() - button.w) // 2
+                        button.draw(self.surface)
+
+                    self.surface.blit(
+                        text, ((self.surface.get_width() - text.get_width()) // 2, 120)
+                    )
+                    render_stats(self.surface)
 
             for button in buttons_group:
                 button.event_handler(events, events_types)
+
+            pygame.display.flip()
+            clock.tick(FPS)
 
     def start_game(self):
         globals.game = Game(self.surface)
@@ -172,12 +177,22 @@ class Menu:
         self.end_game()
 
     def end_game(self):
+        globals.game.end()
         globals.game = None
+
+        # Redraw text
+        self.surface.fill(BACKGROUND_COLOR)
+        text = self.title_font.render("SquareGame", FONT_ANTIALIAS, STATS_COLOR)
+        self.surface.blit(
+            text, ((self.surface.get_width() - text.get_width()) // 2, 120)
+        )
+
+        render_stats(self.surface)
 
 
 def main():
     logging.basicConfig(level=logging.DEBUG)
-    pygame.display.set_caption(WINDOW_NAME)
+    pygame.display.set_caption("SquareGame")
     pygame.display.set_icon(ICON)
 
     Menu(screen)
