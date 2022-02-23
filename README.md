@@ -14,4 +14,11 @@ SquareGame — RPG игра с квадратиком, который бегае
 * Генератор рандомных уровней
 * Враги преследуют и стреляют в игрока
 
-### Скриншоты — Work in progress
+### Скриншоты
+
+![](screenshots/1.png)
+![](screenshots/2.png)
+![](screenshots/3.png)
+![](screenshots/4.png)
+![](screenshots/5.png)
+![](screenshots/6.png)
